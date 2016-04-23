@@ -1,0 +1,212 @@
+﻿<Window x:Class="Pharmacy.Orders"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+          Icon="Images/GearIcon.ico"  Width="1021" Height="656" Title="Замовлення" Background="Cornsilk"  ResizeMode="CanResize" WindowState="Normal" WindowStyle="ThreeDBorderWindow">
+    <!--Height="493.284"-->
+    <!--735.448-->
+    <!--Resources/favicon.ico-->
+    <DockPanel>
+        <Grid Margin="0,146,0,0">
+            <Image Source="Images/Заказы.png" Margin="411,-130,534,561" RenderTransformOrigin="0.397,0.46"/>
+            <Label VerticalAlignment="Center" Content="Замовлення" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="484,-126,350,555" Height="50"  Width="179"></Label>
+            <GroupBox Background="Cornsilk"   BorderBrush="Crimson" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,-76,381,369">
+                <GroupBox.Header>
+                    <TextBlock FontSize="16">  Додати нове замовлення</TextBlock>
+
+                </GroupBox.Header>
+                <Grid Margin="2,0,-2,1">
+                    <Label Content="Клієнт:" HorizontalAlignment="Left" Margin="54,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="47"/>
+                    <Label Content="Товари:" HorizontalAlignment="Left" Margin="48,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="53"/>
+                    <Label Content="Розрахунок:" HorizontalAlignment="Left" Margin="25,81,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="76"/>
+                    <Label Content="Моб. телефон:" HorizontalAlignment="Left" Margin="293,15,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="96"/>
+                    <TextBox x:Name="tb_IntDoc_Copy5" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="394,49,0,0" />
+                    <Label Content="Адреса:" HorizontalAlignment="Left" Margin="328,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="61"/>
+                    <TextBox x:Name="tb_IntDoc_Copy6" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="394,81,0,0" />
+                    <Label Content="Додаткова&#xD;&#xA;інформація:" HorizontalAlignment="Left" Margin="303,72,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="46" Width="86"/>
+                    <Button x:Name="btn_selectDataOK2" Content="Додати" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="102" Margin="480,118,0,0" Height="23"/>
+                    <TextBox x:Name="tb_IntDoc_Copy" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="394,18,0,0" />
+                    <ComboBox HorizontalAlignment="Left" Margin="117,53,0,0" VerticalAlignment="Top" Width="144">
+                        <CheckBox>Товар№1</CheckBox>
+                        <CheckBox>Товар№2</CheckBox>
+                    </ComboBox>
+                    <ComboBox HorizontalAlignment="Left" Margin="117,81,0,0" VerticalAlignment="Top" Width="144">
+                        <TextBlock>Готівковий</TextBlock>
+                        <TextBlock>Без готівковий</TextBlock>
+                    </ComboBox>
+                    <TextBox x:Name="tb_IntDoc_Copy1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="144" Margin="117,22,0,0" />
+                    <Button Click="Btn_selectDataOK2_Copy1_OnClick" BorderThickness="0" Background="Cornsilk" x:Name="btn_selectDataOK2_Copy1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="20" Margin="266,22,0,0" Height="23">
+                        <Image Source="Images/open.png"></Image>
+                    </Button>
+                    <Button BorderThickness="0" Click="Btn_selectDataOK2_Copy2_OnClick" Background="Cornsilk" x:Name="btn_selectDataOK2_Copy2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="20" Margin="266,52,0,0" Height="23">
+                        <Image Source="Images/open.png" RenderTransformOrigin="0.531,2.844"></Image>
+                    </Button></Grid>
+            </GroupBox>
+            <GroupBox Background="Cornsilk"  BorderBrush="Crimson" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="637,-76,10,369">
+                <GroupBox.Header>
+                    <TextBlock FontSize="16">Пошук</TextBlock>
+
+                </GroupBox.Header>
+                <Grid Margin="0,-6,-2,-36">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="tb_IntDoc" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,24,0,0" />
+                    <TextBox x:Name="tb_RecipientPhone" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,52,0,0" />
+                    <Label Content="   ID замовлення:" Grid.Column="1" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="104"/>
+                    <Label Content="Моб. телефон:" Grid.Column="1" HorizontalAlignment="Left" Margin="23,52,0,0" VerticalAlignment="Top" Height="26" Width="91" RenderTransformOrigin="-1.248,0.479"/>
+                    <Label Content="Клієнт:" Grid.Column="1" HorizontalAlignment="Left" Margin="67,78,0,0" VerticalAlignment="Top" Height="26" Width="47"/>
+                    <Button Content="Шукати" Height="23"  Margin="227,108,23,40" Grid.ColumnSpan="2" RenderTransformOrigin="0,0.648"   />
+                    <ComboBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="133,82,0,0" VerticalAlignment="Top" Width="188"/>
+
+                </Grid>
+            </GroupBox>
+
+
+            <DataGrid Margin="10,0,10,41" x:Name="DG_doc" IsReadOnly="True" BorderBrush="Crimson"  BorderThickness="2"  CanUserResizeColumns="True" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" GridLinesVisibility="All"  AutoGenerateColumns="False" Height="323" >
+                <DataGrid.Columns  >
+
+                    <DataGridTextColumn SortMemberPath="IntDocNumber" Header = "ID замовлення" Binding="{Binding IntDocNumber}" Width="150" CanUserResize="False">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Margin" Value="5,3,5,2" />
+
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Width="200" SortMemberPath="CityRecipientDescription">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Клієнт"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="{Binding CityRecipientDescription}" Grid.Row="0" Margin="5,2,5,3" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding RecipientDescription}" Grid.Row="1"  Margin="5,0,5,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding RecipientAddressDescription}" Grid.Row="2"  Margin="5,0,5,0"  TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header ="Куплені товари" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CostOnSite, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn CanUserResize="False" SortMemberPath="StateName">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Дата замовлення"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding StateName}" Grid.Row="0" Margin="0,2,0,3" FontWeight="Bold"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding PrintedDescription}" Grid.Row="1"   TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header ="Загальна вартість" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CostOnSite, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn SortMemberPath="DateTime" Header = "моб. Телефон" Binding="{Binding DateTime, StringFormat=\{0:dd MMMM yyyy\}}" CanUserResize="False" >
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="Margin" Value="5,3,5,2" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTemplateColumn   CanUserResize="False" SortMemberPath="RecipientDescription">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Адреса доставки" TextAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding RecipientContactPhone}" Grid.Row="0" Margin="5,0,5,0"  VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding RecipientDescription}" Grid.Row="1"   Margin="5,0,5,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+
+                    <DataGridTemplateColumn Header ="Дії" CanUserResize="False" SortMemberPath="Cost">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Cost, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header ="Статус" CanUserResize="False" SortMemberPath="Cost">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Cost, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+
+                    </DataGridTemplateColumn>
+
+
+
+
+                </DataGrid.Columns>
+                <DataGrid.Resources>
+                    <ContextMenu  x:Key="DataRowContextMenu">
+                        <MenuItem   Header="Track">
+
+                        </MenuItem>
+                    </ContextMenu>
+                </DataGrid.Resources>
+                <DataGrid.RowStyle >
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Setter Property="ContextMenu" Value="{StaticResource DataRowContextMenu}" />
+                    </Style>
+                </DataGrid.RowStyle>
+
+
+            </DataGrid>
+            <Button x:Name="btn_selectDataOK2_Copy" Content="Закрити" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="102" Margin="0,0,10,10"  Height="23"/>
+
+
+        </Grid>
+
+
+    </DockPanel>
+
+</Window>
