@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Pharmacy.About"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Про програму" Height="564.5" Icon="Images/NPSquare.jpg" Background="Cornsilk" Width="700" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" ResizeMode="NoResize">
+        Title="Про програму" Height="564.5" Icon="Resources/apteka.ico" Background="Cornsilk" Width="700" WindowStartupLocation="CenterOwner" WindowStyle="ToolWindow" ResizeMode="NoResize">
 
     <StackPanel>
         <TabControl >
@@ -78,14 +78,14 @@
                                 АІС "Аптека"
                             </Label.Content>
                         </Label>
-                        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="5"><Run Text="14 "/><Run Text="Квітня"/><Run Text="2016"/></TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="5"><Run Text="14 "/><Run Text="Квітня "/><Run Text="2016"/></TextBlock>
                         <TextBlock Grid.Column="1" Grid.Row="2" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"  TextWrapping="Wrap" Margin="5">
                         <TextBlock>4.0.1.2156</TextBlock>
                          
                             
                     </TextBlock>
                         <TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"  Text="" TextWrapping="Wrap" Margin="5">
-                            <Hyperlink RequestNavigate="Hyperlink_OnRequestNavigate" NavigateUri="AutoParts.com.ua/Documentation">Apteka.com.ua</Hyperlink>
+                            <Hyperlink RequestNavigate="WebSiteHyperlink_OnRequestNavigate" NavigateUri="http://apteka.com.ua/documentation">apteka.com.ua</Hyperlink>
                         </TextBlock>
                         <!--<TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"  Text="Ukraine, Chernivtsi, 58001, str. Korduby 6, 25" TextWrapping="Wrap" Margin="5"></TextBlock>-->
 
@@ -125,7 +125,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE."/>-->
-                        <TextBlock Grid.Row="3" TextWrapping="Wrap">АІС 'Аптека' може поширюватися безкоштовно, за умови збереження в незмінному вигляді дистрибутива, без письмового дозволу власника авторського права. Ви не можете видозмінювати, здавати в оренду, продавати і модифікувати справжню гру. Будь-яке подібне неавторизоване використання гри тягне негайне і автоматичне анулювання цієї ліцензії і може стати предметом переслідування згідно кримінального та / або цивільного законодавства.</TextBlock>
+                        <TextBlock Grid.Row="3" TextWrapping="Wrap">АІС 'Аптека' може поширюватися безкоштовно, за умови збереження в незмінному вигляді дистрибутива, без письмового дозволу власника авторського права. Ви не можете видозмінювати, здавати в оренду, продавати і модифікувати справжню програму. Будь-яке подібне неавторизоване використання програми тягне негайне і автоматичне анулювання цієї ліцензії і може стати предметом переслідування згідно кримінального та / або цивільного законодавства.</TextBlock>
 
 
                         <TextBlock Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Margin="194,12" Width="300">The MIT License (MIT)
@@ -177,14 +177,14 @@ Copyright (c) 2015 SoftServe Team</TextBlock>
                         <Label Grid.Column="0" Grid.Row="2" FontSize="12" FontWeight="Bold"  VerticalAlignment="Center" HorizontalAlignment="Right" Content="Контакти:"></Label>
 
                         <Label Grid.Column="1" Grid.Row="0" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" Content="Ігор Головацький" />
-                        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="5"><Run Text="24 "/><Run Text="Вересень "/><Run Text="2015"/></TextBlock>
+                        <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="5"><Run Text="вул. Академіка Янгеля "/><Run Text="20 "/></TextBlock>
                         <TextBlock Grid.Column="1" Grid.Row="1" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"  TextWrapping="Wrap" Margin="5,35,0,-20" Height="98" Grid.RowSpan="2"><InlineUIContainer>
                         		<TextBlock><Run Text="тел"/><Run Text=": (044) 91-35-7"/></TextBlock>
                         	</InlineUIContainer><LineBreak/><InlineUIContainer>
                         		<TextBlock><Run Text="моб"/><Run Text=": +38 (050) 345-42-11"/></TextBlock>
                         	</InlineUIContainer><LineBreak/><InlineUIContainer>
                         		<TextBlock><Run Text="моб"/><Run Text=": +38 (068) 787-53-79"/></TextBlock>
-                        	</InlineUIContainer><LineBreak/><Run Text="Email: "/><Hyperlink NavigateUri="Ihorkayff@gmail.com"><Run Text="Ihorkayff@gmail.com"/></Hyperlink><LineBreak/><Run Text="Веб Сайт"/><Run Text=": "/><Hyperlink NavigateUri="Ihorkayff@gmail.com"><Run Text="SoftServe.com/ua"/></Hyperlink></TextBlock>
+                        	</InlineUIContainer><LineBreak/><Run Text="Email: "/><Hyperlink RequestNavigate="MailHyperlink_OnRequestNavigate" NavigateUri="Ihorkayff@gmail.com"><Run Text="Ihorkayff@gmail.com"/></Hyperlink><LineBreak/><Run Text="Веб Сайт"/><Run Text=": "/><Hyperlink RequestNavigate="WebSiteHyperlink_OnRequestNavigate" NavigateUri="https://softserve.ua/ua/"><Run Text="softserve.ua/"/></Hyperlink></TextBlock>
 
 
                         <!--<TextBlock Grid.Column="1" Grid.Row="3" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Left"  Text="Ukraine, Chernivtsi, 58001, str. Korduby 6, 25" TextWrapping="Wrap" Margin="5"></TextBlock>-->

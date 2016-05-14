@@ -180,7 +180,12 @@
   <ItemGroup>
     <Resource Include="Images\AICname.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Pharmacy.BusinessLogic\Pharmacy.BusinessLogic.csproj">
+      <Project>{978a6dc0-2a8b-46a7-a6fe-5b8bee088678}</Project>
+      <Name>Pharmacy.BusinessLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
