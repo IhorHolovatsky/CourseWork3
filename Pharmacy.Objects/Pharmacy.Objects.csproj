@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,7 +43,7 @@
     <Compile Include="Classes\Doctor.cs" />
     <Compile Include="Classes\Ingredient.cs" />
     <Compile Include="Classes\Medicine.cs" />
-    <Compile Include="Classes\MedicineUse.cs" />
+    <Compile Include="Classes\UseMethod.cs" />
     <Compile Include="Classes\Order.cs" />
     <Compile Include="Classes\Patient.cs" />
     <Compile Include="Classes\Recipe.cs" />

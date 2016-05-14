@@ -9,13 +9,17 @@ namespace Pharmacy.Objects.Classes
 {
     public class Ingredient : IEntity
     {
-         public string Name { get; set; }
+        public string Name { get; set; }
 
-         public int Count { get; set; }
+        public int Count { get; set; }
 
-         public int ReservedCount { get; set; }
+        public int ReservedCount { get; set; }
 
+        Guid IEntity.EntityId { get; set; }
 
-         Guid IEntity.EntityId { get; set; }
+        public Ingredient(Guid entityId)
+        {
+            ((IEntity)this).EntityId = entityId;
+        }
     }
 }
