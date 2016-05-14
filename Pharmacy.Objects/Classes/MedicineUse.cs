@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Pharmacy.Objects.Classes
 {
-    class MedicineUse
+    public class MedicineUse
     {
     }
 }

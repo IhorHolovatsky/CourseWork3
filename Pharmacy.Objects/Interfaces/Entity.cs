@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Pharmacy.Objects.Interfaces
 {
-    class Entity
+    internal interface IEntity
     {
+        Guid EntityId { get; set; }
     }
 }

@@ -1,7 +1,10 @@
 ﻿namespace Pharmacy.Objects.Enums
 {
-    public enum Enum
+    public enum OrderStatus
     {
-        
+        Open,
+        InProgress,
+        Ready,
+        Closed
     }
 }

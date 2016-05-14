@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Pharmacy.Objects.Classes
 {
-    class Pathient
+    public class Patient
     {
+         public string FirstName { get; set; }
+         public string LastName { get; set; }
+         public string SecondaryName { get; set; }
+         public DateTime DateOfBirth { get; set; }
     }
 }

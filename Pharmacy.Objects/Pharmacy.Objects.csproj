@@ -42,14 +42,16 @@
     <Compile Include="Classes\Doctor.cs" />
     <Compile Include="Classes\Ingredient.cs" />
     <Compile Include="Classes\Medicine.cs" />
+    <Compile Include="Classes\MedicineUse.cs" />
     <Compile Include="Classes\Order.cs" />
-    <Compile Include="Classes\Pathient.cs" />
+    <Compile Include="Classes\Patient.cs" />
+    <Compile Include="Classes\Recipe.cs" />
+    <Compile Include="Classes\Technology.cs" />
+    <Compile Include="Enums\Enum.cs" />
+    <Compile Include="Interfaces\Entity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Enums\" />
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
