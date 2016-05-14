@@ -31,9 +31,7 @@ namespace Pharmacy
         private void About_OnClick(object sender, RoutedEventArgs e)
         {
             var newWindow = new About();
-            newWindow.Show();
-        
-
+            newWindow.ShowDialog();
         }
 
         protected override void OnClosing(CancelEventArgs e)
