@@ -19,13 +19,31 @@ namespace Pharmacy.BusinessLogic.Data
         }
 
         #region GET
-        public static Ingredient GetIngredientById(int ingredientId)
+        public static Ingredient GetIngredientById(Guid ingredientId)
         {
             var query = SqlQueryGeneration.GetIngredientById(ingredientId);
             var ingredients = _sqlManager.GetIngredient(query);
 
             return ingredients.Count > 0 ? ingredients.First() : null;
         }
+
+        public static Ingredient GetIngredientByMedicineId(Guid medicineId)
+        {
+            var query = SqlQueryGeneration.GetIngredientByMedicineIdId(medicineId);
+            var ingredients = _sqlManager.GetIngredient(query);
+
+            return ingredients.Count > 0 ? ingredients.First() : null;
+        }
+
+        public static List<Ingredient> GetAllIngredients()
+        {
+            var query = SqlQueryGeneration.GetAllIngredients();
+
+            var ingredients = _sqlManager.GetIngredient(query);
+
+            return ingredients;
+        } 
+
         #endregion
     }
 }

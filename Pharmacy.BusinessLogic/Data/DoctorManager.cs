@@ -19,7 +19,7 @@ namespace Pharmacy.BusinessLogic.Data
         }
 
         #region GET
-        public static Doctor GetDoctorById(int doctorId)
+        public static Doctor GetDoctorById(Guid doctorId)
         {
             var query = SqlQueryGeneration.GetDoctorById(doctorId);
             var doctors = _sqlManager.GetDoctor(query);

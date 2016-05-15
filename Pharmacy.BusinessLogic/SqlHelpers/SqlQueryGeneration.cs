@@ -125,8 +125,21 @@ namespace Pharmacy.BusinessLogic.SqlHelpers
             return query;
         }
 
+        public static string GetIngredientByMedicineIdId(Guid medicineId)
+        {
+            var query = string.Format(
+                        @"SELECT 
+                             Ingredient.ID_Ingredient,
+                             Title,
+                             Quantity,
+                             Reserved 
+                        FROM MedicineIngredient
+                        INNER JOIN  Ingredient
+                        ON Ingredient.ID_Ingredient = MedicineIngredient.ID_Ingredient
+                        WHERE ID_Medicine = {0}", medicineId);
 
-
+            return query;
+        }
 
         #endregion
 
@@ -148,7 +161,7 @@ namespace Pharmacy.BusinessLogic.SqlHelpers
                             INNER JOIN MedicineUse 
                             ON MedicineUse.ID_MedicineUse = Medicine.ID_MedicineUse
                           WHERE ID_Medicine = '{0}'", medicineId);
-         
+
             return query;
         }
 
@@ -232,7 +245,50 @@ namespace Pharmacy.BusinessLogic.SqlHelpers
 
             return query;
         }
-        
+
         #endregion
+
+        #region UseMethod
+
+        public static string GetUseMethodById(Guid useMethodId)
+        {
+            var query = String.Format(
+                          @"SELECT DISTINCT 
+                          ID_MedicineUse,
+                          Type_Of,
+                          Use_of
+                          FROM MedicineUse
+                          WHERE ID_MedicineUse = '{0}'", useMethodId);
+
+            return query;
+        }
+
+        public static string GetUseMethodByName(string medicineUseName)
+        {
+            var query = String.Format(
+                         @"SELECT DISTINCT 
+                          ID_MedicineUse,
+                          Type_Of,
+                          Use_of
+                          FROM MedicineUse
+                          WHERE Title LIKE '%{0}%'", medicineUseName);
+
+            return query;
+        }
+
+        public static string GetAllUseMethods()
+        {
+            var query = @"SELECT DISTINCT 
+                          ID_MedicineUse,
+                          Type_Of,
+                          Use_of
+                          FROM MedicineUse";
+
+            return query;
+        }
+
+        #endregion
+
+
     }
 }

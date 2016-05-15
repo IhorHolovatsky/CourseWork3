@@ -24,7 +24,7 @@ namespace Pharmacy.Objects.Classes
 
         public UseMethod UseMethod { get; set; }
 
-        public List<Technology> CreaTechnologies { get; set; }
+        public List<Technology> CreateTechnologies { get; set; }
 
         Guid IEntity.EntityId { get; set; }
 

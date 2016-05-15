@@ -70,6 +70,7 @@ namespace Pharmacy.BusinessLogic.Data
 
             return ingredients;
         }
+
         #endregion
 
         #region Medicine
@@ -126,6 +127,24 @@ namespace Pharmacy.BusinessLogic.Data
 
 
         #endregion
+
+
+        #region UseMethod
+
+        public List<UseMethod> GetUseMethod(string query)
+        {
+            var medicineUse = (from row in RunQuery(query, null).AsEnumerable()
+                               select new UseMethod(row.Get<Guid>("ID_MedicineUse"))
+                               {
+                                   TypeOf = row.Get<string>("Type_Of"),
+                                   UseOf = row.Get<string>("Use_of")
+                               }).ToList();
+
+            return medicineUse;
+        }
+
+        #endregion
+
 
         private DataTable RunQuery(string query, Dictionary<string, object> parameters)
         {
@@ -210,7 +229,7 @@ namespace Pharmacy.BusinessLogic.Data
                             sqlCmd.Parameters.Add(parameter);
                         }
                     }
-                    
+
                     var result = sqlCmd.ExecuteScalar();
 
                     return Guid.Parse((string)result);

@@ -44,6 +44,7 @@
     <Compile Include="Data\DoctorManager.cs" />
     <Compile Include="Data\IngredientManager.cs" />
     <Compile Include="Data\MedicineManager.cs" />
+    <Compile Include="Data\UseMethodManager.cs" />
     <Compile Include="SqlHelpers\SqlConnectionHelper.cs" />
     <Compile Include="SqlHelpers\SqlConnectionHolder.cs" />
     <Compile Include="SqlHelpers\SqlExecuteManager.cs" />
