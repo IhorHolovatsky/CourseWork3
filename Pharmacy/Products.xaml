@@ -9,28 +9,7 @@
         <Grid Margin="0,146,0,0">
             <Image Source="Images/w512h4161380477127truck.png" Margin="411,-130,534,561" RenderTransformOrigin="0.397,0.46"/>
             <Label VerticalAlignment="Center" Content="Товари" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="484,-126,411,555" Height="50"  Width="118"></Label>
-            <GroupBox Background="Cornsilk"   BorderBrush="Crimson" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,-76,381,369">
-                <GroupBox.Header>
-                    <TextBlock FontSize="16">Фільтр</TextBlock>
-
-                </GroupBox.Header>
-                <Grid Margin="2,0,-2,1">
-                    <DatePicker x:Name="DatePickerRight"  HorizontalAlignment="Left" Margin="394,19,0,0" VerticalAlignment="Top" Width="188"/>
-                    <Label Content="Категорія:" HorizontalAlignment="Left" Margin="10,18,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="66"/>
-                    <Label Content="Статус:" HorizontalAlignment="Left" Margin="323,61,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="66"/>
-                    <Label Content="Модель:" HorizontalAlignment="Left" Margin="18,61,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="58"/>
-                    <Label Content="Дата поставки:" HorizontalAlignment="Left" Margin="285,18,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="90"/>
-                    <Button x:Name="btn_selectDataOK2" Content="Застосувати" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="92" Margin="490,112,0,0" Height="25"/>
-                    <ComboBox HorizontalAlignment="Left" Margin="95,18,0,0" VerticalAlignment="Top" Width="169"/>
-                    <ComboBox HorizontalAlignment="Left" Margin="394,61,0,0" VerticalAlignment="Top" Width="188"/>
-                    <ComboBox HorizontalAlignment="Left" Margin="95,65,0,0" VerticalAlignment="Top" Width="169"/>
-                    <Label Content="Виробник:" HorizontalAlignment="Left" Margin="10,111,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="66"/>
-                    <ComboBox HorizontalAlignment="Left" Margin="95,112,0,0" VerticalAlignment="Top" Width="169"/>
-
-
-                </Grid>
-            </GroupBox>
-            <GroupBox Background="Cornsilk"  BorderBrush="Crimson" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="637,-76,10,369">
+            <GroupBox Background="Cornsilk"  BorderBrush="Crimson" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,-76,651,369">
                 <GroupBox.Header>
                     <TextBlock FontSize="16">Пошук</TextBlock>
 
@@ -41,15 +20,30 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="tb_IntDoc" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,24,0,0" />
-                    <TextBox x:Name="tb_RecipientPhone" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,52,0,0" />
+                    <ComboBox x:Name="tb_RecipientPhone" Grid.Column="1" HorizontalAlignment="Left" Height="23"  Text="" VerticalAlignment="Top" Width="188" Margin="133,52,0,0" />
                     <TextBox x:Name="tb_RecipientCityDescription" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="60" Margin="261,80,0,0" />
-                    <Label Content="ID деталі:" Grid.Column="1" HorizontalAlignment="Left" Margin="48,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="66"/>
-                    <Label Content="Дані поставщика:" Grid.Column="1" HorizontalAlignment="Left" Margin="7,52,0,0" VerticalAlignment="Top" Height="26" Width="107" RenderTransformOrigin="-1.248,0.479"/>
+                    <Label Content="   Назва:" Grid.Column="1" HorizontalAlignment="Left" Margin="57,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="57"/>
+                    <Label Content="      Застосування:" Grid.Column="1" HorizontalAlignment="Left" Margin="7,52,0,0" VerticalAlignment="Top" Height="26" Width="107" RenderTransformOrigin="-1.248,0.479"/>
                     <Label Content="Вартість:" Grid.Column="1" HorizontalAlignment="Left" Margin="57,78,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
-                    <Button Content="Шукати" Height="23"  Margin="227,108,23,40" Grid.ColumnSpan="2" RenderTransformOrigin="0,0.648"   />
+                    <Button Content="Шукати"   Margin="240,124,10,44" Grid.ColumnSpan="2" RenderTransformOrigin="0,0.648"   />
                     <TextBox x:Name="tb_RecipientCityDescription_Copy" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="61" Margin="165,80,0,0" RenderTransformOrigin="3.264,0.6" />
                     <Label Content="До" Grid.Column="1" HorizontalAlignment="Left" Margin="231,80,0,0" VerticalAlignment="Top" Height="26" Width="25"/>
                     <Label Content="Від" Grid.Column="1" HorizontalAlignment="Left" Margin="133,80,0,0" VerticalAlignment="Top" Height="26" Width="27"/>
+
+                </Grid>
+            </GroupBox>
+
+            <GroupBox Background="Cornsilk"   BorderBrush="Crimson" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="367,-76,10,369" >
+                <GroupBox.Header>
+                    <TextBlock FontSize="16">Деталі</TextBlock>
+
+                </GroupBox.Header>
+                <Grid Margin="2,0,-2,1">
+                    <Image Width="150" Margin="10,10,464,10"/>
+                    <Label FontWeight="Bold" Content="Title" Margin="165,10,10,116"></Label>
+                    <Label FontWeight="Bold" Content="Спосіб застосування:" Margin="165,41,319,85"></Label>
+                    <Label  Margin="310,41,10,85"></Label>
+                    <Label FontWeight="Bold"  Margin="165,77,10,10"></Label>
 
                 </Grid>
             </GroupBox>
@@ -113,7 +107,7 @@
                         </DataGridTemplateColumn.CellTemplate>
 
                     </DataGridTemplateColumn>
-                  
+
 
 
                 </DataGrid.Columns>

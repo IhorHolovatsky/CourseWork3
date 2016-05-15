@@ -65,8 +65,15 @@
 
             <DataGrid Margin="10,0,10,41" x:Name="DG_doc" IsReadOnly="True" BorderBrush="Crimson"  BorderThickness="2"  CanUserResizeColumns="True" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" GridLinesVisibility="All"  AutoGenerateColumns="False" Height="323" >
                 <DataGrid.Columns  >
+                    <DataGridTemplateColumn Width="75" Header ="Статус" CanUserResize="False" SortMemberPath="Cost">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Cost, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
 
-                    <DataGridTextColumn SortMemberPath="IntDocNumber" Header = "ID замовлення" Binding="{Binding IntDocNumber}" Width="150" CanUserResize="False">
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Visibility="Hidden" SortMemberPath="IntDocNumber" Header = "ID замовлення" Binding="{Binding IntDocNumber}" Width="150" CanUserResize="False">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="VerticalAlignment" Value="Center" />
@@ -98,7 +105,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header ="Куплені товари" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
+                    <DataGridTemplateColumn Width="200" Header ="Куплені товари" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding CostOnSite, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
@@ -106,7 +113,7 @@
                         </DataGridTemplateColumn.CellTemplate>
 
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn CanUserResize="False" SortMemberPath="StateName">
+                    <DataGridTemplateColumn Width="115" CanUserResize="False" SortMemberPath="StateName">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Дата замовлення"/>
@@ -165,22 +172,7 @@
                     </DataGridTemplateColumn>
 
 
-                    <DataGridTemplateColumn Header ="Дії" CanUserResize="False" SortMemberPath="Cost">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Cost, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header ="Статус" CanUserResize="False" SortMemberPath="Cost">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Cost, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-
-                    </DataGridTemplateColumn>
+                   
 
 
 

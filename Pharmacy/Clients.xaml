@@ -56,17 +56,7 @@
             <DataGrid Margin="10,0,10,41" x:Name="DG_doc" IsReadOnly="True" BorderBrush="Crimson"  BorderThickness="2"  CanUserResizeColumns="True" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" GridLinesVisibility="All"  AutoGenerateColumns="False" Height="323">
                 <DataGrid.Columns  >
 
-                    <DataGridTextColumn SortMemberPath="IntDocNumber" Header = "ID клієнта" Binding="{Binding IntDocNumber}" Width="150" CanUserResize="False">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="Margin" Value="5,3,5,2" />
-
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTemplateColumn Width="200" SortMemberPath="CityRecipientDescription">
+                    <DataGridTemplateColumn Width="150" SortMemberPath="CityRecipientDescription">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Фамілія"/>
@@ -88,7 +78,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn CanUserResize="False" SortMemberPath="StateName">
+                    <DataGridTemplateColumn Width="100" CanUserResize="False" SortMemberPath="StateName">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Ім'я"/>
@@ -108,7 +98,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header ="По-батькові" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
+                    <DataGridTemplateColumn Width="150" Header ="По-батькові" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding CostOnSite, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
@@ -126,7 +116,7 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
 
-                    <DataGridTemplateColumn   CanUserResize="False" SortMemberPath="RecipientDescription">
+                    <DataGridTemplateColumn Width="150"  CanUserResize="False" SortMemberPath="RecipientDescription">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Адреса" TextAlignment="Center"/>
@@ -145,19 +135,6 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
-
-                    <DataGridTemplateColumn Header ="Дії" CanUserResize="False" SortMemberPath="Cost">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Cost, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-
-                    </DataGridTemplateColumn>
-
-
-
 
                 </DataGrid.Columns>
                 <DataGrid.Resources>
