@@ -82,6 +82,7 @@ namespace Pharmacy.BusinessLogic.Data
                             {
                                 Name = row.Get<string>("Medicine_Name"),
                                 Description = row.Get<string>("Description"),
+                                Price = row.Get<decimal>("Price"),
                                 Image = Image.FromStream(new MemoryStream(row.Get<byte[]>("Image"))),
                                 ImageUrl = row.Get<string>("ImageUrl"),
                                 UseMethod = new UseMethod(row.Get<Guid>("ID_MedicineUse"))
@@ -113,6 +114,7 @@ namespace Pharmacy.BusinessLogic.Data
                              {
                                  Name = row.Get<string>("Medicine_Name"),
                                  Description = row.Get<string>("Description"),
+                                 Price = row.Get<decimal>("Price"),
                                  Image = Image.FromStream(new MemoryStream(row.Get<byte[]>("Image"))),
                                  ImageUrl = row.Get<string>("ImageUrl"),
                                  UseMethod = new UseMethod(row.Get<Guid>("ID_MedicineUse"))

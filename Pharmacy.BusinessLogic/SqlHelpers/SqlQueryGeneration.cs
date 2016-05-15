@@ -151,6 +151,7 @@ namespace Pharmacy.BusinessLogic.SqlHelpers
                           @"SELECT DISTINCT 
                           ID_Medicine,
                           Medicine_Name,
+                          Price,
                           Image,
                           Description,
                           ImageUrl
@@ -171,6 +172,7 @@ namespace Pharmacy.BusinessLogic.SqlHelpers
                          @"SELECT DISTINCT 
                           ID_Medicine,
                           Medicine_Name,
+                          Price,
                           Image,
                           Description,
                           ImageUrl
@@ -190,6 +192,7 @@ namespace Pharmacy.BusinessLogic.SqlHelpers
             var query = @"SELECT DISTINCT 
                           ID_Medicine,
                           Medicine_Name,
+                          Price,
                           Image,
                           Description,
                           ImageUrl
@@ -207,8 +210,8 @@ namespace Pharmacy.BusinessLogic.SqlHelpers
         {
             var medicineId = Guid.NewGuid();
 
-            var query = string.Format(@"INSERT INTO Medicine(ID_Medicine, ID_MedicineUse, Medicine_Name, Description, ImageUrl, Image)
-                          VALUES ({0}, {1}, {2}, {3}, {4}, @Image)", medicineId, medicine.UseMethod.Id, medicine.Name, medicine.Description, medicine.ImageUrl);
+            var query = string.Format(@"INSERT INTO Medicine(ID_Medicine, ID_MedicineUse, Price, Medicine_Name, Description, ImageUrl, Image)
+                          VALUES ({0}, {1}, {2}, {3}, {4}, {5}, @Image)", medicineId, medicine.UseMethod.Id, medicine.Price, medicine.Name, medicine.Description, medicine.ImageUrl);
 
             return query;
         }
@@ -228,6 +231,10 @@ namespace Pharmacy.BusinessLogic.SqlHelpers
             if (!string.IsNullOrWhiteSpace(medicine.Description))
             {
                 fieldsToUpdate.Add(string.Format("Description = {0}", medicine.Description));
+            } 
+            if (medicine.Price > default(decimal))
+            {
+                fieldsToUpdate.Add(string.Format("Price = {0}", medicine.Price));
             }
             if (!string.IsNullOrWhiteSpace(medicine.ImageUrl))
             {
