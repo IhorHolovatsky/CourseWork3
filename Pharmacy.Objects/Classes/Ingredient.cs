@@ -15,6 +15,8 @@ namespace Pharmacy.Objects.Classes
 
         public int ReservedCount { get; set; }
 
+        public List<Medicine> Medicines { get; set; }
+
         Guid IEntity.EntityId { get; set; }
 
         public Ingredient(Guid entityId)

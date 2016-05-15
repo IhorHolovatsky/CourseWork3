@@ -13,7 +13,7 @@ namespace Pharmacy.Objects.Classes
 
         public string UseOf { get; set; }
         public string TypeOf { get; set; }
-
+        
         Guid IEntity.EntityId { get; set; }
 
         public UseMethod(Guid id)

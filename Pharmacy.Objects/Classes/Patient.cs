@@ -15,6 +15,8 @@ namespace Pharmacy.Objects.Classes
         public string SecondaryName { get; set; }
         public DateTime DateOfBirth { get; set; }
 
+        public List<Order> Orders { get; set; }
+
         Guid IEntity.EntityId { get; set; }
 
         public Patient(Guid id)

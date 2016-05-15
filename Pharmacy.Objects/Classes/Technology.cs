@@ -12,6 +12,8 @@ namespace Pharmacy.Objects.Classes
         public Guid Id { get { return ((IEntity) this).EntityId; } }
         public string PreparationMethod { get; set; }
 
+        public List<Medicine> Medicines { get; set; }
+
         Guid IEntity.EntityId { get; set; }
 
         public Technology(Guid id)
