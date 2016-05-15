@@ -11,5 +11,10 @@ namespace Pharmacy
         {
             InitializeComponent();
         }
+
+        private void Btn_selectDataOK2_Copy_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

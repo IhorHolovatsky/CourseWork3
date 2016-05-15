@@ -201,7 +201,7 @@
 
 
             </DataGrid>
-            <Button x:Name="btn_selectDataOK2_Copy" Content="Закрити" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="102" Margin="0,0,10,10"  Height="23"/>
+            <Button x:Name="btn_selectDataOK2_Copy" Content="Закрити" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="102" Margin="0,0,10,10"  Height="23" Click="Btn_selectDataOK2_Copy_OnClick"/>
 
 
         </Grid>

@@ -9,16 +9,20 @@
     <DockPanel>
 
         <Grid DockPanel.Dock="Top" VerticalAlignment="Top" Height="Auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="372*"/>
+                <ColumnDefinition Width="641*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="25"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Menu IsMainMenu="True" Grid.Row="0" >
+            <Menu IsMainMenu="True" Grid.Row="0" Grid.ColumnSpan="2" >
                 <MenuItem  Header="Головна">
                     <MenuItem.Icon>
                         <Image Source="Images/advancedsettings_9120.png"/>
                     </MenuItem.Icon>
-                    
+
                     <MenuItem x:Name="About" Click="About_OnClick" Header="About" />
                     <Separator />
 
@@ -50,38 +54,32 @@
                     </MenuItem.Icon>
                 </MenuItem>
             </Menu>
+            <Image Source="Images/apteka.jpg" Grid.Row="1" Grid.Column="0" Height="544" Width="300"/>
+            <Label Content="AIC 'Aптека'" FontSize="24" Grid.Row="1" Grid.Column="0" Margin="0,432,0,0" HorizontalAlignment="Center" Width="143"/>
 
+            <Label Grid.Row="1" Grid.Column="1" Content="Меню" FontWeight="Bold" FontSize="36" HorizontalAlignment="Center" Margin="0,27,0,448" ></Label>
 
-            <Grid Grid.Row="1" Margin="10,0,10,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
+            <Image Grid.Row="1" Grid.Column="1" Source="Images/newItem.png"  Margin="66,115,450,304"></Image>
+            <Label Grid.Row="1" Grid.Column="1" Content="Нове замовлення"  FontSize="18" Margin="48,245,406,243" ></Label>
 
-                <Image ToolTip="this is image" Source="Images/apteka.jpg"  Grid.Row="1" Margin="10,50,81,69" Grid.RowSpan="4">
-                    <Image.Stretch>
-                        <Stretch>Fill</Stretch>
-                    </Image.Stretch>
-                </Image>
-                <Label Grid.Row="1" Content="Вхід в систему" Margin="0,50,0,10" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Grid.ColumnSpan="2"/>
-                <Label x:Name="lb1" Grid.Row="2" Grid.Column="0" Content="Логін:" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14" Margin="0,25,0,16"   />
-                <TextBox x:Name="tb" Grid.Row="2"  Grid.Column="1"  TextWrapping="Wrap" Text="" Height="20" Width="172" Margin="23,30,0,21" HorizontalAlignment="Left" VerticalAlignment="Center" />
+            <Image Grid.Row="1" Grid.Column="1" Source="Images/Заказы.png"  Margin="455,115,61,304" MouseUp="MenuOrders_OnClick"></Image>
+            <Label Grid.Row="1" Grid.Column="1" Content="Замовлення"  FontSize="18" Margin="468,245,48,243" MouseUp="MenuOrders_OnClick"></Label>
 
-                <Label x:Name="lb2" Grid.Row="3" Grid.Column="0"  Content="Пароль:" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14" RenderTransformOrigin="0.534,1.345" Margin="0,21"   />
-                <TextBox x:Name="tbb" Grid.Row="3"  Grid.Column="1"  TextWrapping="Wrap" Text="" Height="20" Width="174" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="23,30,0,21" />
+            <Image Grid.Row="1" Grid.Column="1" Source="Images/Клиенты.png"  Margin="66,318,450,101"  MouseUp="MenuClients_OnClick"></Image>
+            <Label Grid.Row="1" Grid.Column="1" Content="Клієнти"  FontSize="18" Margin="91,448,450,40"  MouseUp="MenuClients_OnClick"></Label>
 
+            <Image Grid.Row="1" Grid.Column="1" Source="Images/Довідка.png"  Margin="262,318,254,101" MouseUp="About_OnClick"></Image>
+            <Label Grid.Row="1" Grid.Column="1" Content="Про програму"  FontSize="18" Margin="262,448,235,40" MouseUp="About_OnClick"></Label>
 
-                <Button x:Name="btn" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="Btn_OnClick" Content="Ввійти" Height="20" Width="100"  Margin="10,27,0,24" />
+            <Image Grid.Row="1" Grid.Column="1" Source="Images/w512h4161380477127truck.png" Margin="262,115,255,304" MouseUp="MenuProduct_OnClick"></Image>
+            <Label Grid.Row="1" Grid.Column="1" Content="Товари"  FontSize="18" Margin="287,245,278,243" MouseUp="MenuProduct_OnClick"></Label>
 
-            </Grid>
+            <Image Grid.Row="1" Grid.Column="1" Source="Images/Exit.png" Margin="455,318,61,101" MouseUp="ExitClick"></Image>
+            <Label Grid.Row="1" Grid.Column="1" Content="Вихід"  FontSize="18" Margin="501,448,61,40"  MouseUp="ExitClick" ></Label>
+
+            <GridSplitter Grid.Column="1" Background="Gray" Opacity="50" HorizontalAlignment="Left" Height="544" Margin="17,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="3"/>
         </Grid>
+
 
     </DockPanel>
 

@@ -24,8 +24,6 @@
                     <Label Content="Моб. телефон:" HorizontalAlignment="Left" Margin="293,15,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="96"/>
                     <TextBox x:Name="tb_IntDoc_Copy5" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="394,49,0,0" />
                     <Label Content="Адреса:" HorizontalAlignment="Left" Margin="328,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="61"/>
-                    <TextBox x:Name="tb_IntDoc_Copy6" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="394,81,0,0" />
-                    <Label Content="Вартість:" HorizontalAlignment="Left" Margin="324,76,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="65"/>
                     <Button x:Name="btn_selectDataOK2" Content="Додати" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="102" Margin="480,118,0,0" Height="23"/>
                     <DatePicker x:Name="DatePickerRight_Copy"  HorizontalAlignment="Left" Margin="117,118,0,0" VerticalAlignment="Top" Width="169"/>
                     <Label Content="Дата народження:" HorizontalAlignment="Left" Margin="-3,114,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="115"/>
@@ -178,7 +176,7 @@
 
             </DataGrid>
             <Button x:Name="btn_selectDataOK2_Copy" Content="Вибрати" IsEnabled="False" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="102" Margin="10,0,0,10"  Height="23"/>
-            <Button x:Name="btn_selectDataOK2_Copy1" Content="Закрити" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="102" Margin="0,0,10,10"  Height="23"/>
+            <Button x:Name="btn_selectDataOK2_Copy1" Content="Закрити" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="102" Margin="0,0,10,10"  Height="23" Click="Btn_selectDataOK2_Copy1_OnClick"/>
 
 
         </Grid>

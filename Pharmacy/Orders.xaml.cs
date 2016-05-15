@@ -25,5 +25,10 @@ namespace Pharmacy
             var newWind = new Clients();
             newWind.ShowDialog();
         }
+
+        private void Btn_selectDataOK2_Copy_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

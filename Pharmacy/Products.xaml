@@ -56,9 +56,17 @@
 
 
             <DataGrid Margin="10,0,10,41" x:Name="DG_doc" IsReadOnly="True" BorderBrush="Crimson"  BorderThickness="2"  CanUserResizeColumns="True" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" GridLinesVisibility="All"  AutoGenerateColumns="False" Height="323">
-                <DataGrid.Columns  >
-
-                    <DataGridTextColumn SortMemberPath="IntDocNumber" Header = "ID деталі" Binding="{Binding IntDocNumber}" Width="150" CanUserResize="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Visibility="Hidden"  Binding="{Binding IntDocNumber}" Width="150" CanUserResize="False">
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Header ="Фотографія" Width="200" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CostOnSite, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn SortMemberPath="IntDocNumber"  Header = "Назва" Binding="{Binding IntDocNumber}" Width="150" CanUserResize="False">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="VerticalAlignment" Value="Center" />
@@ -68,10 +76,10 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTemplateColumn Width="200" SortMemberPath="CityRecipientDescription">
+                    <DataGridTemplateColumn Width="150" SortMemberPath="CityRecipientDescription">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Text="Фотографія"/>
+                                <TextBlock Text="Спосіб застосування" HorizontalAlignment="Center"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.HeaderTemplate>
                         <DataGridTemplateColumn.CellTemplate >
@@ -93,24 +101,11 @@
                     <DataGridTemplateColumn CanUserResize="False" SortMemberPath="StateName">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Text="Кількість"/>
+                                <TextBlock Text="Ціна"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.HeaderTemplate>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding StateName}" Grid.Row="0" Margin="0,2,0,3" FontWeight="Bold"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding PrintedDescription}" Grid.Row="1"   TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                </Grid>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header ="Розміри" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
+                    <DataGridTemplateColumn Header ="Інструкція" CanUserResize="False" Width="200" CanUserSort="True" SortMemberPath="CostOnSite">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding CostOnSite, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
@@ -118,55 +113,7 @@
                         </DataGridTemplateColumn.CellTemplate>
 
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn SortMemberPath="DateTime" Header = "Дата поставки" Binding="{Binding DateTime, StringFormat=\{0:dd MMMM yyyy\}}" CanUserResize="False" >
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="Margin" Value="5,3,5,2" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-
-                    <DataGridTemplateColumn   CanUserResize="False" SortMemberPath="RecipientDescription">
-                        <DataGridTemplateColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="Дані поставщика"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.HeaderTemplate>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding RecipientContactPhone}" Grid.Row="0" Margin="5,0,5,0"  VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding RecipientDescription}" Grid.Row="1"   Margin="5,0,5,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                </Grid>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-
-                    <DataGridTemplateColumn Header ="Вартість" CanUserResize="False" SortMemberPath="Cost">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Cost, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-
-                    </DataGridTemplateColumn>
-
-                    <DataGridTemplateColumn Header ="Статус" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding CostOnSite, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-
-                    </DataGridTemplateColumn>
-
+                  
 
 
                 </DataGrid.Columns>
@@ -185,7 +132,7 @@
 
 
             </DataGrid>
-            <Button x:Name="btn_selectDataOK2_Copy" Content="Закрити"  HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="102" Margin="0,0,10,10"  Height="23"/>
+            <Button x:Name="btn_selectDataOK2_Copy" Content="Закрити"  HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="102" Margin="0,0,10,10"  Height="23" Click="Btn_selectDataOK2_Copy_OnClick"/>
             <Button x:Name="btn_selectDataOK2_Copy2" Content="Вибрати" IsEnabled="False" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="102" Margin="10,0,0,10"  Height="23"/>
 
 

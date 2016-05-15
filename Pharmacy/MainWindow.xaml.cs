@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Pharmacy
 {
@@ -36,13 +37,7 @@ namespace Pharmacy
 
         protected override void OnClosing(CancelEventArgs e)
         {
-           
-            foreach (Window window in this.OwnedWindows)
-            {
-                MessageBox.Show(window.Title);
-                window.Close();
-            }
-            base.OnClosing(e);
+            Environment.Exit(0);
         }
 
         private void MenuProduct_OnClick(object sender, RoutedEventArgs e)
@@ -61,6 +56,16 @@ namespace Pharmacy
         {
             var newProduc = new Orders();
             newProduc.Show();
+        }
+
+        private void ExitClick(object sender, MouseButtonEventArgs e)
+        {
+            foreach (Window window in this.OwnedWindows)
+            {
+                MessageBox.Show(window.Title);
+                window.Close();
+            }
+            Environment.Exit(0);
         }
     }
 }
