@@ -53,10 +53,10 @@
             </GroupBox>
 
 
-            <DataGrid Margin="10,0,10,41" x:Name="DG_doc" IsReadOnly="True" BorderBrush="Crimson"  BorderThickness="2"  CanUserResizeColumns="True" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" GridLinesVisibility="All"  AutoGenerateColumns="False" Height="323">
+            <DataGrid Margin="10,0,10,41" x:Name="PatientsGrid" IsReadOnly="True" BorderBrush="Crimson"  BorderThickness="2"  CanUserResizeColumns="True" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" GridLinesVisibility="All"  AutoGenerateColumns="False" Height="323">
                 <DataGrid.Columns  >
 
-                    <DataGridTemplateColumn Width="150" SortMemberPath="CityRecipientDescription">
+                    <DataGridTemplateColumn Width="150" SortMemberPath="LastName">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Фамілія"/>
@@ -65,20 +65,12 @@
                         <DataGridTemplateColumn.CellTemplate >
                             <DataTemplate>
                                 <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-
-                                    <TextBlock Text="{Binding CityRecipientDescription}" Grid.Row="0" Margin="5,2,5,3" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding RecipientDescription}" Grid.Row="1"  Margin="5,0,5,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding RecipientAddressDescription}" Grid.Row="2"  Margin="5,0,5,0"  TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding LastName}" Grid.Row="0" Margin="5,2,5,3"  TextWrapping="Wrap" VerticalAlignment="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="100" CanUserResize="False" SortMemberPath="StateName">
+                    <DataGridTemplateColumn Width="100" CanUserResize="False" SortMemberPath="FistName">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Ім'я"/>
@@ -87,36 +79,28 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding StateName}" Grid.Row="0" Margin="0,2,0,3" FontWeight="Bold"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding PrintedDescription}" Grid.Row="1"   TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                </Grid>
+                                  <TextBlock Text="{Binding FirstName}" Grid.Row="0" Margin="0,2,0,3"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                      </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="150" Header ="По-батькові" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
+                    <DataGridTemplateColumn Width="200" Header ="По-батькові" CanUserResize="False" CanUserSort="True" SortMemberPath="SecondaryName">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding CostOnSite, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock Text="{Binding SecondaryName}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
 
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn SortMemberPath="DateTime" Header = "моб. Телефон" Binding="{Binding DateTime, StringFormat=\{0:dd MMMM yyyy\}}" CanUserResize="False" >
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="Margin" Value="5,3,5,2" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
+                    <DataGridTemplateColumn Width="200" SortMemberPath="PhoneNumber"  Header = "моб. Телефон"  >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding PhoneNumber}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Width="150"  CanUserResize="False" SortMemberPath="RecipientDescription">
+                    <DataGridTemplateColumn Width="200"  CanUserResize="False" SortMemberPath="Address">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Адреса" TextAlignment="Center"/>
@@ -125,12 +109,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding RecipientContactPhone}" Grid.Row="0" Margin="5,0,5,0"  VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding RecipientDescription}" Grid.Row="1"   Margin="5,0,5,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                     <TextBlock Text="{Binding Address}"   Margin="5,0,5,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

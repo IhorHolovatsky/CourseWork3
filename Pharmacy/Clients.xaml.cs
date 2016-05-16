@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Pharmacy.BusinessLogic.Data;
 
 namespace Pharmacy
 {
@@ -10,6 +11,10 @@ namespace Pharmacy
         public Clients()
         {
             InitializeComponent();
+
+            var patients = PatientManager.GetAll();
+
+            PatientsGrid.ItemsSource = patients;
         }
 
         private void Btn_selectDataOK2_Copy1_OnClick(object sender, RoutedEventArgs e)

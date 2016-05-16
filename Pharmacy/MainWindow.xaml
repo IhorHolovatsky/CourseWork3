@@ -59,8 +59,8 @@
 
             <Label Grid.Row="1" Grid.Column="1" Content="Меню" FontWeight="Bold" FontSize="36" HorizontalAlignment="Center" Margin="0,27,0,448" ></Label>
 
-            <Image Grid.Row="1" Grid.Column="1" Source="Images/newItem.png"  Margin="66,115,450,304"></Image>
-            <Label Grid.Row="1" Grid.Column="1" Content="Нове замовлення"  FontSize="18" Margin="48,245,406,243" ></Label>
+            <Image Grid.Row="1" Grid.Column="1" Source="Images/newItem.png"  Margin="66,115,450,304" MouseUp="NewOrder_Click"></Image>
+            <Label Grid.Row="1" Grid.Column="1" Content="Нове замовлення"  FontSize="18" Margin="48,245,406,243"  MouseUp="NewOrder_Click"></Label>
 
             <Image Grid.Row="1" Grid.Column="1" Source="Images/Заказы.png"  Margin="455,115,61,304" MouseUp="MenuOrders_OnClick"></Image>
             <Label Grid.Row="1" Grid.Column="1" Content="Замовлення"  FontSize="18" Margin="468,245,48,243" MouseUp="MenuOrders_OnClick"></Label>

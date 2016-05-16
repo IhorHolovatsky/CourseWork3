@@ -55,7 +55,6 @@ namespace Pharmacy.BusinessLogic.Data
 
         #endregion
 
-
         #region Ingredient
 
         public List<Ingredient> GetIngredient(string query)
@@ -129,8 +128,7 @@ namespace Pharmacy.BusinessLogic.Data
 
 
         #endregion
-
-
+        
         #region UseMethod
 
         public List<UseMethod> GetUseMethod(string query)
@@ -143,6 +141,26 @@ namespace Pharmacy.BusinessLogic.Data
                                }).ToList();
 
             return medicineUse;
+        }
+
+        #endregion
+
+        #region Patient
+
+        public List<Patient> GetPatient(string query)
+        {
+            var patient = (from row in RunQuery(query, null).AsEnumerable()
+                               select new Patient(row.Get<Guid>("ID_Patient"))
+                               {
+                                   LastName = row.Get<string>("Surname"),
+                                   FirstName = row.Get<string>("Patient_Name"),
+                                   SecondaryName = row.Get<string>("PName"),
+                                   DateOfBirth = row.Get<DateTime>("Date_Of_Birth"),
+                                   PhoneNumber = row.Get<string>("PhoneNumber"),
+                                   Address = row.Get<string>("Address")
+                               }).ToList();
+
+            return patient;
         }
 
         #endregion

@@ -13,6 +13,8 @@ namespace Pharmacy.Objects.Classes
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string SecondaryName { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
         public DateTime DateOfBirth { get; set; }
 
         public List<Order> Orders { get; set; }

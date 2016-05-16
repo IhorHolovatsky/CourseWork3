@@ -67,5 +67,11 @@ namespace Pharmacy
             }
             Environment.Exit(0);
         }
+
+        private void NewOrder_Click(object sender, MouseButtonEventArgs e)
+        {
+            var newOrder = new NewOrder();
+            newOrder.ShowDialog();
+        }
     }
 }

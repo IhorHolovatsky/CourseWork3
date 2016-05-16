@@ -80,6 +80,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NewOrder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Orders.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -90,6 +94,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NewOrder.xaml.cs">
+      <DependentUpon>NewOrder.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Orders.xaml.cs">
       <DependentUpon>Orders.xaml</DependentUpon>
     </Compile>
@@ -184,6 +191,10 @@
     <ProjectReference Include="..\Pharmacy.BusinessLogic\Pharmacy.BusinessLogic.csproj">
       <Project>{978a6dc0-2a8b-46a7-a6fe-5b8bee088678}</Project>
       <Name>Pharmacy.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Pharmacy.Objects\Pharmacy.Objects.csproj">
+      <Project>{3961d2cf-b182-4efe-92c2-0a1d8e9574fd}</Project>
+      <Name>Pharmacy.Objects</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

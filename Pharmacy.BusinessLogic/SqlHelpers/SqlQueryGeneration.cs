@@ -231,7 +231,7 @@ namespace Pharmacy.BusinessLogic.SqlHelpers
             if (!string.IsNullOrWhiteSpace(medicine.Description))
             {
                 fieldsToUpdate.Add(string.Format("Description = {0}", medicine.Description));
-            } 
+            }
             if (medicine.Price > default(decimal))
             {
                 fieldsToUpdate.Add(string.Format("Price = {0}", medicine.Price));
@@ -296,6 +296,51 @@ namespace Pharmacy.BusinessLogic.SqlHelpers
 
         #endregion
 
+        #region Patient
+
+        public static string GetPatientById(Guid patientId)
+        {
+            var query = string.Format(
+                                    @"SELECT DISTINCT *
+                                    FROM Patient
+                                    WHERE ID_Patient = {0}", patientId);
+
+            return query;
+        }
+
+        public static string GetPatientByName(string patientName)
+        {
+            var query = string.Format(
+                         @"SELECT DISTINCT *
+                           FROM Patient
+                           WHERE Patient_Name LIKE '%{0}%'
+                           OR Surname LIKE '%{0}%'
+                           OR PName LIKE '%{0}%'", patientName);
+
+            return query;
+        }
+
+        public static string GetPatientByOrderId(Guid orderId)
+        {
+            var query = string.Format(
+                         @"SELECT * 
+                           FROM Patient 
+                           INNER JOIN OrderTable
+                           ON Patient.ID_Patient = OrderTable.ID_Patient
+                           WHERE ID_OrderTable = '{0}'", orderId);
+
+            return query;
+        }
+
+        public static string GetAllPatients()
+        {
+            var query = @"SELECT * 
+                          FROM Patient";
+
+            return query;
+        }
+
+        #endregion
 
     }
 }
