@@ -46,7 +46,7 @@
     <Compile Include="Managers\MedicineManager.cs" />
     <Compile Include="Managers\OderManager.cs" />
     <Compile Include="Managers\PatientManager.cs" />
-    <Compile Include="Managers\UseMethodManager.cs" />
+    <Compile Include="Managers\MedicineTypeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

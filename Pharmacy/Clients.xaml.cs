@@ -100,7 +100,7 @@ namespace Pharmacy
             var insertedPatientId = PatientManager.Insert(patient);
             var insertedPatient = PatientManager.GetPatientById(insertedPatientId);
 
-            PatientsGrid.Items.Add(insertedPatient);
+           // PatientsGrid.Items.Add(insertedPatient);
         }
     }
 }

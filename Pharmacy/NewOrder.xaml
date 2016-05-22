@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Pharmacy.NewOrder"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Icon="Resources/apteka.ico"  Width="1021" Height="656" Title="Нове замовлення" Background="Cornsilk"  ResizeMode="CanResize" WindowState="Normal" WindowStyle="ThreeDBorderWindow">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  ResizeMode="NoResize"
+        Icon="Resources/apteka.ico"  Width="1021" Height="656" Title="Нове замовлення" Background="Cornsilk" WindowState="Normal" WindowStyle="ThreeDBorderWindow">
     <DockPanel>
         <Grid>
             <GroupBox Header="Інформація про пацієнта" Background="Cornsilk"   BorderBrush="Crimson" VerticalAlignment="Stretch"  Margin="30,24,376,406">

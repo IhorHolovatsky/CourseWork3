@@ -1,8 +1,8 @@
 ﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  ResizeMode="NoResize"
           xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="Pharmacy.MainWindow"
-          Icon="Resources/apteka.ico"  Width="1021" Height="600" Title="АІС Аптека" Background="Cornsilk"  Loaded="MainWindow_OnLoaded"  ResizeMode="CanResize" WindowState="Normal" WindowStyle="ThreeDBorderWindow">
+          Icon="Resources/apteka.ico"  Width="1021" Height="600" Title="АІС Аптека" Background="Cornsilk"  Loaded="MainWindow_OnLoaded" WindowState="Normal" WindowStyle="ThreeDBorderWindow">
     <!--Height="493.284"-->
     <!--735.448-->
     <!--Resources/favicon.ico-->

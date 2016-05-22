@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Windows.Shapes;
 using Microsoft.Win32;
 using Pharmacy.BusinessLogic.Managers;
 using Pharmacy.DatabaseAccess.Classes;
+using Image = System.Drawing.Image;
 
 namespace Pharmacy.Products
 {
@@ -22,8 +24,12 @@ namespace Pharmacy.Products
     /// </summary>
     public partial class NewProduct : Window
     {
+        private bool _isEditMode { get; set; }
+        private Medicine _medicine { get; set; }
         private List<Ingredient> _ingredients;
+        private List<MedicineType> _medicineTypes;
         private List<Ingredient> _selectedIngredients = new List<Ingredient>();
+      
         public NewProduct()
         {
             InitializeComponent();
@@ -34,14 +40,32 @@ namespace Pharmacy.Products
                                      new MouseButtonEventHandler(IngredientsGrid_OnRowClick)));
             IngredientsGrid.RowStyle = rowStyle;
 
+            _medicineTypes = MedicineTypeManager.GetAll();
+            medicineType.ItemsSource = _medicineTypes;
+
             //init grid and combobox data
             _ingredients = IngredientManager.GetAll();
-            var useMethods = UseMethodManager.GetAll();
-            userMethod.ItemsSource = useMethods;
 
             IngredientsGrid.ItemsSource = GetGridData();
 
+        }
 
+        public void Init(Medicine medicine)
+        {
+            _isEditMode = true;
+            _medicine = medicine;
+
+            productName.Text = medicine.Name;
+            productDescription.Text = medicine.Description;
+            medicineType.SelectedItem = _medicineTypes.First(mtype => mtype.Id == medicine.Type.Id);
+         
+            productPrice.Text = medicine.Price.ToString();
+            _selectedIngredients = medicine.Ingredients;
+            ingredientsTextBlock.Text = string.Join(", ", _selectedIngredients);
+            productImage.Source = medicine.BitmapImage;
+            productImageLabel.Visibility = Visibility.Hidden;
+            
+            IngredientsGrid.ItemsSource = GetGridData();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -63,10 +87,17 @@ namespace Pharmacy.Products
             if (result == true)
             {
                 productImage.Source = new BitmapImage(new Uri(dlg.FileName));
-
             }
         }
 
+        private void Clear_OnClick(object sender, RoutedEventArgs e)
+        {
+           _selectedIngredients.Clear();
+            ingredientsTextBlock.Text = null;
+
+            IngredientsGrid.ItemsSource = GetGridData();
+        }
+        
         private void IngredientFilter_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             IngredientsGrid.ItemsSource = GetGridData();
@@ -85,20 +116,52 @@ namespace Pharmacy.Products
                 return;
 
             _selectedIngredients.Add(ingredient);
-            
+
             ingredientsTextBlock.Text = string.Join(", ", _selectedIngredients);
             IngredientsGrid.ItemsSource = GetGridData();
         }
 
         private IEnumerable<Ingredient> GetGridData()
         {
-            var gridData = _ingredients.Except(_selectedIngredients)
-                                         .ToList();
+            var gridData = _ingredients.Where(ingr => _selectedIngredients.All(selectedIngr => selectedIngr.Id != ingr.Id))
+                                       .ToList(); 
 
-            gridData = gridData.Where(ingr => ingr.Name.StartsWith(ingredientFilter.Text))
+            gridData = gridData.Where(ingr => ingr.Name.StartsWith(ingredientFilter.Text, true, CultureInfo.DefaultThreadCurrentCulture))
                                .ToList();
 
             return gridData;
+        }
+
+        private void SaveMedicineClick(object sender, RoutedEventArgs e)
+        {
+            var medicine = new Medicine(_medicine == null ? Guid.Empty : _medicine.Id)
+            {
+                Name = productName.Text,
+                Description = productDescription.Text,
+                Image = Utils.Utils.BitmapImageToBitmap(productImage.Source as BitmapImage),
+                Type = medicineType.SelectionBoxItem as MedicineType,
+                Price = decimal.Parse(productPrice.Text),
+                Ingredients = _selectedIngredients
+            };
+            
+            if (_isEditMode)
+            {
+                MedicineManager.Update(medicine);
+                this.Close();
+                return;
+            }
+            
+
+            MedicineManager.Insert(medicine);
+
+            productName.Text = null;
+            productDescription.Text = null;
+            medicineType.SelectedIndex = -1;
+            productPrice.Text = null;
+            ingredientsTextBlock.Text = null;
+            productImage.Source = null;
+            ingredientFilter.Text = null;
+            _selectedIngredients.Clear();
         }
     }
 }

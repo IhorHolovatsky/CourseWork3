@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Pharmacy.DatabaseAccess.Classes;
 
 namespace Pharmacy.DatabaseAccess.SqlHelpers
@@ -77,8 +78,8 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
 
             var query = string.Format(
                 @"UPDATE Doctor
-                SET {0}
-                WHERE ID_Doctor = {1}",
+                SET '{0}'
+                WHERE ID_Doctor = '{1}'",
                 string.Join(",", fieldsToUpdate.ToArray()),
                 doctor.Id);
 
@@ -140,7 +141,7 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
                         FROM MedicineIngredient
                         INNER JOIN  Ingredient
                         ON Ingredient.ID_Ingredient = MedicineIngredient.ID_Ingredient
-                        WHERE ID_Medicine = {0}", medicineId);
+                        WHERE ID_Medicine = '{0}'", medicineId);
 
             return query;
         }
@@ -163,19 +164,10 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
         public static string GetMedicineById(Guid medicineId)
         {
             var query = String.Format(
-                          @"SELECT DISTINCT 
-                          ID_Medicine,
-                          Medicine_Name,
-                          Price,
-                          Image,
-                          Description,
-                          ImageUrl
-                          MedicineUse.ID_MedicineUse,
-		                  MedicineUse.Type_Of,
-		                  MedicineUse.Use_of
+                          @"SELECT *
 		                  FROM Medicine
-                            INNER JOIN MedicineUse 
-                            ON MedicineUse.ID_MedicineUse = Medicine.ID_MedicineUse
+                            INNER JOIN MedicineType 
+                            ON MedicineType.ID_MedicineType = Medicine.ID_MedicineType
                           WHERE ID_Medicine = '{0}'", medicineId);
 
             return query;
@@ -184,19 +176,10 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
         public static string GetMedicineByName(string medicineName)
         {
             var query = String.Format(
-                         @"SELECT DISTINCT 
-                          ID_Medicine,
-                          Medicine_Name,
-                          Price,
-                          Image,
-                          Description,
-                          ImageUrl
-                          MedicineUse.ID_MedicineUse,
-		                  MedicineUse.Type_Of,
-		                  MedicineUse.Use_of
+                         @"SELECT *
 		                  FROM Medicine
-                            INNER JOIN MedicineUse 
-                            ON MedicineUse.ID_MedicineUse = Medicine.ID_MedicineUse
+                            INNER JOIN MedicineType 
+                            ON MedicineType.ID_MedicineType = Medicine.ID_MedicineType
                           WHERE Medicine_Name LIKE '%{0}%'", medicineName);
 
             return query;
@@ -215,49 +198,58 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
 
         public static string GetAllMedicines()
         {
-            var query = @"SELECT DISTINCT 
-                          ID_Medicine,
-                          Medicine_Name,
-                          Price,
-                          Image,
-                          Description,
-                          ImageUrl
-                          MedicineUse.ID_MedicineUse,
-		                  MedicineUse.Type_Of,
-		                  MedicineUse.Use_of
+            var query = @"SELECT *
 		                  FROM Medicine
-                            INNER JOIN MedicineUse 
-                            ON MedicineUse.ID_MedicineUse = Medicine.ID_MedicineUse";
+                            INNER JOIN MedicineType 
+                            ON MedicineType.ID_MedicineType = Medicine.ID_MedicineType";
 
             return query;
         }
 
-        public static string InsertMedicine(Medicine medicine)
+        public static List<string> InsertMedicine(Medicine medicine)
         {
             var medicineId = Guid.NewGuid();
 
-            var query = string.Format(@"INSERT INTO Medicine(ID_Medicine, ID_MedicineUse, Price, Medicine_Name, Description, ImageUrl, Image)
+            var medicineQuery = string.Format(@"INSERT INTO Medicine(ID_Medicine, ID_MedicineType, Price, Medicine_Name, Description, ImageUrl, Image)
                                       OUTPUT inserted.ID_Medicine                          
-                                      VALUES ({0}, {1}, {2}, {3}, {4}, {5}, @Image)", medicineId, medicine.UseMethod.Id, medicine.Price, medicine.Name, medicine.Description, medicine.ImageUrl);
+                                      VALUES ('{0}', '{1}', {2}, '{3}', '{4}', '{5}', @Image)", medicineId, medicine.Type.Id, medicine.Price, medicine.Name.Replace("'", "''"), medicine.Description.Replace("'", "''"), medicine.ImageUrl);
 
-            return query;
+            var medicineIngredientsQuery = @"INSERT INTO MedicineIngredient(ID_MedicineIngredient, ID_Medicine, ID_Ingredient)
+                                                           VALUES";
+
+            var values = (from ingredient in medicine.Ingredients
+                          let entityId = Guid.NewGuid()
+                          select string.Format("('{0}', '{1}', '{2}')", entityId, medicineId, ingredient.Id))
+                          .ToList();
+
+            medicineIngredientsQuery += string.Join(",", values);
+
+
+            return new List<string> { medicineQuery, medicineIngredientsQuery };
         }
 
-        public static string UpdateMedicine(Medicine medicine)
+        public static List<string> UpdateMedicine(Medicine medicine)
         {
             var fieldsToUpdate = new List<string>();
+            var query = string.Empty;
+            var medicineIngredientsDeleteQuery = string.Empty;
+            var medicineIngredientsQuery = string.Empty;
 
             if (!string.IsNullOrWhiteSpace(medicine.Name))
             {
-                fieldsToUpdate.Add(string.Format("Medicine_Name = {0}", medicine.Name));
+                fieldsToUpdate.Add(string.Format("Medicine_Name = '{0}'", medicine.Name));
             }
-            if (medicine.UseMethod.Id != Guid.Empty)
+            if (medicine.Type.Id != Guid.Empty)
             {
-                fieldsToUpdate.Add(string.Format("ID_MedicineUse = {0}", medicine.UseMethod.Id));
+                fieldsToUpdate.Add(string.Format("ID_MedicineType = '{0}'", medicine.Type.Id));
+            }
+            if (medicine.Image != null)
+            {
+                fieldsToUpdate.Add("Image = @Image");
             }
             if (!string.IsNullOrWhiteSpace(medicine.Description))
             {
-                fieldsToUpdate.Add(string.Format("Description = {0}", medicine.Description));
+                fieldsToUpdate.Add(string.Format("Description = '{0}'", medicine.Description));
             }
             if (medicine.Price > default(decimal))
             {
@@ -265,47 +257,74 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
             }
             if (!string.IsNullOrWhiteSpace(medicine.ImageUrl))
             {
-                fieldsToUpdate.Add(string.Format("ImageUrl = {0}", medicine.ImageUrl));
+                fieldsToUpdate.Add(string.Format("ImageUrl = '{0}'", medicine.ImageUrl));
             }
 
-            if (!fieldsToUpdate.Any()) return string.Empty;
-
-            var query = string.Format(
+            if (fieldsToUpdate.Any())
+            {
+                query = string.Format(
                 @"UPDATE Medicine
                   SET {0}
-                  WHERE ID_Medicine = {1}",
+                  OUTPUT inserted.Description, inserted.Medicine_Name, inserted.ID_Medicine, inserted.ID_MedicineType, inserted.Image, inserted.Price, inserted.ImageUrl
+                  WHERE ID_Medicine = '{1}'",
                 string.Join(",", fieldsToUpdate.ToArray()),
                 medicine.Id);
+            }
 
-            return query;
+            if (medicine.Ingredients != null && medicine.Ingredients.Count > 0)
+            {
+                medicineIngredientsDeleteQuery = string.Format(@"DELETE  FROM MedicineIngredient
+                                                   WHERE ID_Medicine = '{0}'", medicine.Id);
+
+                medicineIngredientsQuery = @"INSERT INTO MedicineIngredient(ID_MedicineIngredient, ID_Medicine, ID_Ingredient)
+                                                           VALUES";
+
+                var values = (from ingredient in medicine.Ingredients
+                              let entityId = Guid.NewGuid()
+                              select string.Format("('{0}', '{1}', '{2}')", entityId, medicine.Id, ingredient.Id))
+                              .ToList();
+
+                medicineIngredientsQuery += string.Join(",", values);
+            }
+
+            return new List<string> { query, medicineIngredientsDeleteQuery, medicineIngredientsQuery };
+        }
+
+        public static List<string> DeleteMedicine(Medicine medicine)
+        {
+            var queryDeleteMedicine = string.Format(@"DELETE  FROM Medicine
+                                        WHERE ID_Medicine = '{0}'", medicine.Id);
+
+            var queryDeleteMedicineIngredients = string.Format(@"DELETE  FROM MedicineIngredient
+                                        WHERE ID_Medicine = '{0}'", medicine.Id);
+
+            return new List<string> { queryDeleteMedicineIngredients, queryDeleteMedicine};
         }
 
         #endregion
 
-        #region UseMethod
+        #region MedicineType
 
         public static string GetUseMethodById(Guid useMethodId)
         {
             var query = String.Format(
                           @"SELECT DISTINCT 
-                          ID_MedicineUse,
-                          Type_Of,
-                          Use_of
-                          FROM MedicineUse
-                          WHERE ID_MedicineUse = '{0}'", useMethodId);
+                          ID_MedicineType,
+                          Type_Of
+                          FROM MedicineType
+                          WHERE ID_MedicineType = '{0}'", useMethodId);
 
             return query;
         }
 
-        public static string GetUseMethodByName(string medicineUseName)
+        public static string GetUseMethodByName(string medicineTypeName)
         {
             var query = String.Format(
                          @"SELECT DISTINCT 
-                          ID_MedicineUse,
-                          Type_Of,
-                          Use_of
-                          FROM MedicineUse
-                          WHERE Title LIKE '%{0}%'", medicineUseName);
+                          ID_MedicineType,
+                          Type_Of
+                          FROM MedicineType
+                          WHERE Title LIKE '%{0}%'", medicineTypeName);
 
             return query;
         }
@@ -313,10 +332,9 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
         public static string GetAllUseMethods()
         {
             var query = @"SELECT DISTINCT 
-                          ID_MedicineUse,
-                          Type_Of,
-                          Use_of
-                          FROM MedicineUse";
+                          ID_MedicineType,
+                          Type_Of
+                          FROM MedicineType";
 
             return query;
         }

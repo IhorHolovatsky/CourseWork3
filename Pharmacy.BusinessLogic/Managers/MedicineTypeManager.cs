@@ -6,17 +6,17 @@ using Pharmacy.DatabaseAccess.SqlHelpers;
 
 namespace Pharmacy.BusinessLogic.Managers
 {
-    public class UseMethodManager
+    public class MedicineTypeManager
     {
         private static SqlExecuteManager _sqlManager;
 
-        static UseMethodManager()
+        static MedicineTypeManager()
         {
             _sqlManager = new SqlExecuteManager();
         }
 
         #region GET
-        public static UseMethod GetUseMethodById(Guid useMethodId)
+        public static MedicineType GetUseMethodById(Guid useMethodId)
         {
             var query = SqlQueryGeneration.GetUseMethodById(useMethodId);
             var useMethod = _sqlManager.GetUseMethod(query);
@@ -24,7 +24,7 @@ namespace Pharmacy.BusinessLogic.Managers
             return useMethod.Count > 0 ? useMethod.First() : null;
         }
 
-        public static UseMethod GetUseMethodByName(string useMethodName)
+        public static MedicineType GetUseMethodByName(string useMethodName)
         {
             var query = SqlQueryGeneration.GetUseMethodByName(useMethodName);
             var useMethod = _sqlManager.GetUseMethod(query);
@@ -32,7 +32,7 @@ namespace Pharmacy.BusinessLogic.Managers
             return useMethod.Count > 0 ? useMethod.First() : null;
         }
 
-        public static List<UseMethod> GetAll()
+        public static List<MedicineType> GetAll()
         {
             var query = SqlQueryGeneration.GetAllUseMethods();
             var useMethod = _sqlManager.GetUseMethod(query);

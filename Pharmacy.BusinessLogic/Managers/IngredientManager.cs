@@ -34,12 +34,12 @@ namespace Pharmacy.BusinessLogic.Managers
             return ingredients;
         }
 
-        public static Ingredient GetByMedicineId(Guid medicineId)
+        public static List<Ingredient> GetByMedicineId(Guid medicineId)
         {
             var query = SqlQueryGeneration.GetIngredientByMedicineIdId(medicineId);
             var ingredients = _sqlManager.GetIngredient(query);
 
-            return ingredients.Count > 0 ? ingredients.First() : null;
+            return ingredients;
         }
 
         public static List<Ingredient> GetAll()

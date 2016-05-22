@@ -85,31 +85,33 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
                                 Price = row.Get<decimal>("Price"),
                                 Image = Image.FromStream(new MemoryStream(row.Get<byte[]>("Image"))),
                                 ImageUrl = row.Get<string>("ImageUrl"),
-                                UseMethod = new UseMethod(row.Get<Guid>("ID_MedicineUse"))
+                                Type = new MedicineType(row.Get<Guid>("ID_MedicineType"))
                                 {
                                     TypeOf = row.Get<string>("Type_Of"),
-                                    UseOf = row.Get<string>("Use_Of")
                                 }
                             }).ToList();
 
             return medicine;
         }
 
-        public Guid InsertMedicine(string query, Image image)
+        public Guid InsertMedicine(List<string> queries, Image image)
         {
             var stream = new MemoryStream();
             image.Save(stream, System.Drawing.Imaging.ImageFormat.Gif);
-            var objectId = RunScalarQuery(query, new Dictionary<string, object> { { "@Image", stream.ToArray() } });
+            var objectId = RunScalarQuery(queries[0], new Dictionary<string, object> { { "@Image", stream.ToArray() } });
+
+            //Insert relationships
+            RunNonQuery(string.Format(queries[1], objectId), null);
 
             return objectId;
         }
 
-        public Medicine UpdateMedicine(string query, Image image)
+        public Medicine UpdateMedicine(List<string> query, Image image)
         {
             var stream = new MemoryStream();
             image.Save(stream, System.Drawing.Imaging.ImageFormat.Gif);
 
-            var medicines = (from row in RunQuery(query, new Dictionary<string, object> { { "@Image", stream.ToArray() } }).AsEnumerable()
+            var medicines = (from row in RunQuery(string.Join("\n", query), new Dictionary<string, object> { { "@Image", stream.ToArray() } }).AsEnumerable()
                              select new Medicine(row.Get<Guid>("ID_Medicine"))
                              {
                                  Name = row.Get<string>("Medicine_Name"),
@@ -117,31 +119,33 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
                                  Price = row.Get<decimal>("Price"),
                                  Image = Image.FromStream(new MemoryStream(row.Get<byte[]>("Image"))),
                                  ImageUrl = row.Get<string>("ImageUrl"),
-                                 UseMethod = new UseMethod(row.Get<Guid>("ID_MedicineUse"))
+                                 Type = new MedicineType(row.Get<Guid>("ID_MedicineType"))
                                  {
                                      TypeOf = row.Get<string>("Type_Of"),
-                                     UseOf = row.Get<string>("Use_Of")
                                  }
                              }).ToList();
 
+            
             return medicines.Count > 0 ? medicines.First() : null;
         }
 
-
+        public bool DeleteMedicine(List<string> query)
+        {
+            return RunNonQuery(string.Join("\n", query), null);
+        }
         #endregion
         
         #region UseMethod
 
-        public List<UseMethod> GetUseMethod(string query)
+        public List<MedicineType> GetUseMethod(string query)
         {
-            var medicineUse = (from row in RunQuery(query, null).AsEnumerable()
-                               select new UseMethod(row.Get<Guid>("ID_MedicineUse"))
+            var MedicineType = (from row in RunQuery(query, null).AsEnumerable()
+                               select new MedicineType(row.Get<Guid>("ID_MedicineType"))
                                {
                                    TypeOf = row.Get<string>("Type_Of"),
-                                   UseOf = row.Get<string>("Use_of")
                                }).ToList();
 
-            return medicineUse;
+            return MedicineType;
         }
 
         #endregion

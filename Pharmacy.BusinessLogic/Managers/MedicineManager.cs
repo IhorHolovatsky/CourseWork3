@@ -7,7 +7,7 @@ using Pharmacy.DatabaseAccess.SqlHelpers;
 
 namespace Pharmacy.BusinessLogic.Managers
 {
-    class MedicineManager
+    public class MedicineManager
     {
         private static SqlExecuteManager _sqlManager;
 
@@ -69,7 +69,7 @@ namespace Pharmacy.BusinessLogic.Managers
 
         #region INSERT
 
-        public static void Insert(Medicine medicine)
+        public static Guid Insert(Medicine medicine)
         {
             if (medicine == null)
                 throw new ArgumentException("Medicine information was not provided");
@@ -78,7 +78,8 @@ namespace Pharmacy.BusinessLogic.Managers
 
             try
             {
-                _sqlManager.InsertMedicine(query, medicine.Image);
+                return _sqlManager.InsertMedicine(query, medicine.Image);
+
             }
             catch (SqlException e)
             {
@@ -98,7 +99,25 @@ namespace Pharmacy.BusinessLogic.Managers
 
             var query = SqlQueryGeneration.UpdateMedicine(medicine);
 
-            return string.IsNullOrEmpty(query) ? medicine : _sqlManager.UpdateMedicine(query, medicine.Image);
+
+            var returnMedicine = _sqlManager.UpdateMedicine(query, medicine.Image);
+            returnMedicine.Ingredients = IngredientManager.GetByMedicineId(returnMedicine.Id);
+
+            return returnMedicine;
+        }
+
+        #endregion
+
+        #region DELETE
+
+        public static bool Delete(Medicine medicine)
+        {
+            if (medicine == null || medicine.Id == Guid.Empty)
+                throw new ArgumentException("MedicineId information was not provided");
+
+            var query = SqlQueryGeneration.DeleteMedicine(medicine);
+            
+            return _sqlManager.DeleteMedicine(query);
         }
 
         #endregion
