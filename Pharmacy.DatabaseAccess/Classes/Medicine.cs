@@ -1,0 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using Pharmacy.DatabaseAccess.Interfaces;
+
+namespace Pharmacy.DatabaseAccess.Classes
+{
+    public class Medicine : IEntity
+    {
+        public Guid Id { get { return ((IEntity) this).EntityId; } }
+
+        public string Name { get; set; }
+
+        public decimal Price { get; set; }
+
+        public string Description { get; set; }
+
+        public Image Image { get; set; }
+
+        public string ImageUrl { get; set; }
+
+        public List<Ingredient> Ingredients { get; set; }
+
+        public UseMethod UseMethod { get; set; }
+
+        public List<Technology> CreateTechnologies { get; set; }
+
+        Guid IEntity.EntityId { get; set; }
+
+        public Medicine(Guid medicineId)
+        {
+            ((IEntity)this).EntityId = medicineId;
+        }
+    }
+}

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3961D2CF-B182-4EFE-92C2-0A1D8E9574FD}</ProjectGuid>
+    <ProjectGuid>{31A2FA80-A64E-426F-B4E0-CDD9EE3CA8C8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Pharmacy.Objects</RootNamespace>
-    <AssemblyName>Pharmacy.Objects</AssemblyName>
+    <RootNamespace>Pharmacy.DatabaseAccess</RootNamespace>
+    <AssemblyName>Pharmacy.DatabaseAccess</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -40,13 +41,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Doctor.cs" />
+    <Compile Include="Classes\Ingredient.cs" />
+    <Compile Include="Classes\Medicine.cs" />
+    <Compile Include="Classes\Order.cs" />
+    <Compile Include="Classes\Patient.cs" />
+    <Compile Include="Classes\Recipe.cs" />
+    <Compile Include="Classes\Technology.cs" />
+    <Compile Include="Classes\UseMethod.cs" />
+    <Compile Include="Enums\Enum.cs" />
+    <Compile Include="Interfaces\Entity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Pharmacy.DatabaseAccess\Pharmacy.DatabaseAccess.csproj">
-      <Project>{31a2fa80-a64e-426f-b4e0-cdd9ee3ca8c8}</Project>
-      <Name>Pharmacy.DatabaseAccess</Name>
-    </ProjectReference>
+    <Compile Include="SqlHelpers\SqlConnectionHelper.cs" />
+    <Compile Include="SqlHelpers\SqlConnectionHolder.cs" />
+    <Compile Include="SqlHelpers\SqlExecuteManager.cs" />
+    <Compile Include="SqlHelpers\SqlQueryGeneration.cs" />
+    <Compile Include="Utils\DataExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

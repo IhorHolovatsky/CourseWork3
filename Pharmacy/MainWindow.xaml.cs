@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 
+
 namespace Pharmacy
 {
     /// <summary>
@@ -42,7 +43,7 @@ namespace Pharmacy
 
         private void MenuProduct_OnClick(object sender, RoutedEventArgs e)
         {
-            var newProduc = new Products();
+            var newProduc = new Products.Products();
             newProduc.Show();
         }
 

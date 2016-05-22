@@ -6,6 +6,7 @@
     <!--735.448-->
     <!--Resources/favicon.ico-->
     <DockPanel>
+        
         <Grid Margin="0,146,0,0">
             <Image Source="Images/Заказы.png" Margin="411,-130,534,561" RenderTransformOrigin="0.397,0.46"/>
             <Label VerticalAlignment="Center" Content="Замовлення" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="484,-126,350,555" Height="50"  Width="179"></Label>

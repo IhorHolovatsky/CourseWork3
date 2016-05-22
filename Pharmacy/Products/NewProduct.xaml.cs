@@ -1,0 +1,104 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using Microsoft.Win32;
+using Pharmacy.BusinessLogic.Managers;
+using Pharmacy.DatabaseAccess.Classes;
+
+namespace Pharmacy.Products
+{
+    /// <summary>
+    /// Interaction logic for NewProduct.xaml
+    /// </summary>
+    public partial class NewProduct : Window
+    {
+        private List<Ingredient> _ingredients;
+        private List<Ingredient> _selectedIngredients = new List<Ingredient>();
+        public NewProduct()
+        {
+            InitializeComponent();
+
+            //Init double click on ingredients grid
+            var rowStyle = new Style(typeof(DataGridRow));
+            rowStyle.Setters.Add(new EventSetter(MouseDoubleClickEvent,
+                                     new MouseButtonEventHandler(IngredientsGrid_OnRowClick)));
+            IngredientsGrid.RowStyle = rowStyle;
+
+            //init grid and combobox data
+            _ingredients = IngredientManager.GetAll();
+            var useMethods = UseMethodManager.GetAll();
+            userMethod.ItemsSource = useMethods;
+
+            IngredientsGrid.ItemsSource = GetGridData();
+
+
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            var dlg = new OpenFileDialog
+            {
+                DefaultExt = ".jpg",
+                Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png"
+            };
+
+            // Set filter for file extension and default file extension
+
+            // Display OpenFileDialog by calling ShowDialog method
+            var result = dlg.ShowDialog();
+
+            productImageLabel.Visibility = result ?? false ? Visibility.Hidden : Visibility.Visible;
+
+            // Get the selected file name and display in a TextBox
+            if (result == true)
+            {
+                productImage.Source = new BitmapImage(new Uri(dlg.FileName));
+
+            }
+        }
+
+        private void IngredientFilter_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            IngredientsGrid.ItemsSource = GetGridData();
+        }
+
+        private void IngredientsGrid_OnRowClick(object sender, RoutedEventArgs e)
+        {
+            var dataRow = (DataGridRow)sender;
+
+            if (!(dataRow.Item is Ingredient))
+                return;
+
+            var ingredient = (Ingredient)dataRow.Item;
+
+            if (_selectedIngredients.Contains(ingredient))
+                return;
+
+            _selectedIngredients.Add(ingredient);
+            
+            ingredientsTextBlock.Text = string.Join(", ", _selectedIngredients);
+            IngredientsGrid.ItemsSource = GetGridData();
+        }
+
+        private IEnumerable<Ingredient> GetGridData()
+        {
+            var gridData = _ingredients.Except(_selectedIngredients)
+                                         .ToList();
+
+            gridData = gridData.Where(ingr => ingr.Name.StartsWith(ingredientFilter.Text))
+                               .ToList();
+
+            return gridData;
+        }
+    }
+}

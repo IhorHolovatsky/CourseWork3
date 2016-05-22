@@ -15,19 +15,19 @@
 
                 </GroupBox.Header>
                 <Grid Margin="2,0,-2,1">
-                    <TextBox x:Name="tb_IntDoc_Copy1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="169" Margin="117,18,0,0" />
+                    <TextBox x:Name="tb_PatientLastName" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="169" Margin="117,18,0,0" />
                     <Label Content="Фамілія:" HorizontalAlignment="Left" Margin="47,19,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="54"/>
-                    <TextBox x:Name="tb_IntDoc_Copy2" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="169" Margin="117,49,0,0" />
+                    <TextBox x:Name="tb_PatientFirstName" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="169" Margin="117,49,0,0" />
                     <Label Content="Ім'я:" HorizontalAlignment="Left" Margin="68,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="33"/>
-                    <TextBox x:Name="tb_IntDoc_Copy3" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="169" Margin="117,80,0,0" />
+                    <TextBox x:Name="tb_PatientSecondaryName" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="169" Margin="117,80,0,0" />
                     <Label Content="По-батькові:" HorizontalAlignment="Left" Margin="25,81,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="76"/>
                     <Label Content="Моб. телефон:" HorizontalAlignment="Left" Margin="293,15,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="96"/>
-                    <TextBox x:Name="tb_IntDoc_Copy5" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="394,49,0,0" />
+                    <TextBox x:Name="tb_PatientAddress" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="394,49,0,0" />
                     <Label Content="Адреса:" HorizontalAlignment="Left" Margin="328,46,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="61"/>
-                    <Button x:Name="btn_selectDataOK2" Content="Додати" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="102" Margin="480,118,0,0" Height="23"/>
-                    <DatePicker x:Name="DatePickerRight_Copy"  HorizontalAlignment="Left" Margin="117,118,0,0" VerticalAlignment="Top" Width="169"/>
+                    <Button x:Name="btn_AddNewClient" Content="Додати" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="102" Margin="480,118,0,0" Height="23" Click="AddNewClientClick"/>
+                    <DatePicker x:Name="tb_PatientDateOfBirth"  HorizontalAlignment="Left" Margin="117,118,0,0" VerticalAlignment="Top" Width="169"/>
                     <Label Content="Дата народження:" HorizontalAlignment="Left" Margin="-3,114,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="115"/>
-                    <TextBox x:Name="tb_IntDoc_Copy" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="394,18,0,0" />
+                    <TextBox x:Name="tb_PatientPhoneNumber" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="394,18,0,0" />
 
                 </Grid>
             </GroupBox>
@@ -41,20 +41,30 @@
                         <ColumnDefinition Width="0*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="tb_IntDoc" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,24,0,0" />
-                    <TextBox x:Name="tb_RecipientPhone" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,52,0,0" />
-                    <TextBox x:Name="tb_RecipientCityDescription" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,80,0,0" />
+                    <TextBox x:Name="tb_ClientId" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,24,0,0" />
+                    <TextBox x:Name="tb_ClientPhone" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,52,0,0" />
+                    <TextBox x:Name="tb_ClientLastName" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,80,0,0" />
                     <Label Content="ID клієнта:" Grid.Column="1" HorizontalAlignment="Left" Margin="48,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="66"/>
                     <Label Content="Моб. телефон:" Grid.Column="1" HorizontalAlignment="Left" Margin="23,52,0,0" VerticalAlignment="Top" Height="26" Width="91" RenderTransformOrigin="-1.248,0.479"/>
                     <Label Content="Фамілія:" Grid.Column="1" HorizontalAlignment="Left" Margin="57,78,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
-                    <Button Content="Шукати" Height="23"  Margin="227,108,23,40" Grid.ColumnSpan="2" RenderTransformOrigin="0,0.648"   />
+                    <Button Content="Шукати" Height="23" Grid.Column="1"   Margin="227,108,23,40"  Click="FindClientClick"   />
+                    <Button Content="Показати всіх" Height="23" Grid.Column="1"   Margin="23,108,227,40"  Click="ShowAllClientClick"   />
 
                 </Grid>
             </GroupBox>
 
 
-            <DataGrid Margin="10,0,10,41" x:Name="PatientsGrid" IsReadOnly="True" BorderBrush="Crimson"  BorderThickness="2"  CanUserResizeColumns="True" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" GridLinesVisibility="All"  AutoGenerateColumns="False" Height="323">
+            <DataGrid Margin="10,0,10,41" x:Name="PatientsGrid" IsReadOnly="True" BorderBrush="Crimson" SelectionChanged="PatientsGrid_OnSelected"  BorderThickness="2"  CanUserResizeColumns="True" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" GridLinesVisibility="All"  AutoGenerateColumns="False" Height="323">
                 <DataGrid.Columns  >
+                    <DataGridTemplateColumn Visibility="Hidden" Width="150" SortMemberPath="Id">
+                       <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Text="{Binding Id}" Grid.Row="0" Margin="5,2,5,3"  TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
                     <DataGridTemplateColumn Width="150" SortMemberPath="LastName">
                         <DataGridTemplateColumn.HeaderTemplate>
@@ -131,7 +141,7 @@
 
 
             </DataGrid>
-            <Button x:Name="btn_selectDataOK2_Copy" Content="Вибрати" IsEnabled="False" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="102" Margin="10,0,0,10"  Height="23"/>
+            <Button x:Name="btn_selectClient" Content="Вибрати" IsEnabled="False" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="102" Margin="10,0,0,10" Click="Btn_selectClient_OnClick" Height="23"/>
             <Button x:Name="btn_selectDataOK2_Copy1" Content="Закрити" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="102" Margin="0,0,10,10"  Height="23" Click="Btn_selectDataOK2_Copy1_OnClick"/>
 
 

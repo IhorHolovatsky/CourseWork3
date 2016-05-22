@@ -15,7 +15,7 @@ namespace Pharmacy
         private void Btn_selectDataOK2_Copy2_OnClick(object sender, RoutedEventArgs e)
         {
             //Prod
-            var newWind = new Products();
+            var newWind = new Products.Products();
             newWind.ShowDialog();
         }
 
