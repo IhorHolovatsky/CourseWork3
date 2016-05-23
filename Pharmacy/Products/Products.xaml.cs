@@ -1,9 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Xml;
+using System.Xml.Serialization;
 using Pharmacy.BusinessLogic.Managers;
 using Pharmacy.DatabaseAccess.Classes;
 
@@ -57,15 +63,15 @@ namespace Pharmacy.Products
                 return;
 
             var medicine = (Medicine)dataRow.Item;
-
+           
             var newProduct = new NewProduct();
             newProduct.Init(medicine);
             newProduct.ShowDialog();
 
             productsGrid.ItemsSource = GetGridData();
         }
-
-
+        
+      
         private List<Medicine> GetGridData()
         {
             var medicines = MedicineManager.GetAllMedicines();

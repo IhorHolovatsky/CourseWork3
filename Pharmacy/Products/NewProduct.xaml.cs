@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +49,12 @@ namespace Pharmacy.Products
 
             IngredientsGrid.ItemsSource = GetGridData();
 
+        }
+
+        public void Init()
+        {
+            var medicine = (Medicine) Utils.Utils.Deserialize(typeof (Medicine));
+            this.Init(medicine);
         }
 
         public void Init(Medicine medicine)
@@ -163,5 +170,26 @@ namespace Pharmacy.Products
             ingredientFilter.Text = null;
             _selectedIngredients.Clear();
         }
+
+        private void Init_OnClick(object sender, RoutedEventArgs e)
+        {
+            Init();
+        }
+
+        private void Save_OnClick(object sender, RoutedEventArgs e)
+        {
+              var medicine = new Medicine(_medicine == null ? Guid.Empty : _medicine.Id)
+            {
+                Name = productName.Text,
+                Description = productDescription.Text,
+                Image = Utils.Utils.BitmapImageToBitmap(productImage.Source as BitmapImage),
+                Type = medicineType.SelectionBoxItem as MedicineType,
+                Price = decimal.Parse(productPrice.Text),
+                Ingredients = _selectedIngredients
+            };
+
+            Utils.Utils.Serialize(medicine);
+        }
+
     }
 }
