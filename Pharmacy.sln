@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharmacy.DatabaseAccess", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pharmacy.Test", "Pharmacy.Test\Pharmacy.Test.csproj", "{590C2456-E30A-42DC-AE65-19AD1069D182}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DBScripts", "DBScripts", "{6F795C5A-44F1-4C5D-A02B-FEB6E284508B}"
+	ProjectSection(SolutionItems) = preProject
+		CreateSchemaAndInitData.sql = CreateSchemaAndInitData.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
