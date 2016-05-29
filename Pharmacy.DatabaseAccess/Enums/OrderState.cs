@@ -1,6 +1,6 @@
 ﻿namespace Pharmacy.DatabaseAccess.Enums
 {
-    public enum OrderStatus
+    public enum OrderState
     {
         Open,
         InProgress,

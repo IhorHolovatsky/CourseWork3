@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Pharmacy.DatabaseAccess.Interfaces;
+using Pharmacy.DatabaseAccess.SqlHelpers;
 
 namespace Pharmacy.DatabaseAccess.Classes
 {
@@ -16,6 +17,12 @@ namespace Pharmacy.DatabaseAccess.Classes
         public Technology(Guid id)
         {
             ((IEntity) this).EntityId = id;
+        }
+
+        public List<Medicine> GetMedicines()
+        {
+            var query = SqlQueryGeneration.GetAllMedicinesByIngredientId(this.Id);
+            return new SqlExecuteManager().GetMedicine(query);
         }
     }
 }

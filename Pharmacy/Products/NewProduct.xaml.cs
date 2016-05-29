@@ -71,6 +71,9 @@ namespace Pharmacy.Products
             ingredientsTextBlock.Text = string.Join(", ", _selectedIngredients);
             productImage.Source = medicine.BitmapImage;
             productImageLabel.Visibility = Visibility.Hidden;
+
+            AddButton.Visibility = Visibility.Hidden;
+            EditButton.Visibility = Visibility.Visible;
             
             IngredientsGrid.ItemsSource = GetGridData();
         }
@@ -147,7 +150,7 @@ namespace Pharmacy.Products
                 Description = productDescription.Text,
                 Image = Utils.Utils.BitmapImageToBitmap(productImage.Source as BitmapImage),
                 Type = medicineType.SelectionBoxItem as MedicineType,
-                Price = decimal.Parse(productPrice.Text),
+                Price = int.Parse(productPrice.Text),
                 Ingredients = _selectedIngredients
             };
             
@@ -174,6 +177,9 @@ namespace Pharmacy.Products
         private void Init_OnClick(object sender, RoutedEventArgs e)
         {
             Init();
+            
+            AddButton.Visibility = Visibility.Visible;
+            EditButton.Visibility = Visibility.Hidden;
         }
 
         private void Save_OnClick(object sender, RoutedEventArgs e)
@@ -184,7 +190,7 @@ namespace Pharmacy.Products
                 Description = productDescription.Text,
                 Image = Utils.Utils.BitmapImageToBitmap(productImage.Source as BitmapImage),
                 Type = medicineType.SelectionBoxItem as MedicineType,
-                Price = decimal.Parse(productPrice.Text),
+                Price = int.Parse(productPrice.Text),
                 Ingredients = _selectedIngredients
             };
 

@@ -16,7 +16,7 @@ namespace Pharmacy.BusinessLogic.Managers
         }
 
         #region GET
-        public static Patient GetPatientById(Guid patientId)
+        public static Patient GetById(Guid patientId)
         {
             var query = SqlQueryGeneration.GetPatientById(patientId);
             var patient = _sqlManager.GetPatient(query);
@@ -24,7 +24,7 @@ namespace Pharmacy.BusinessLogic.Managers
             return patient.Count > 0 ? patient.First() : null;
         }
 
-        public static List<Patient> GetPatientByName(string patientName)
+        public static List<Patient> GetByName(string patientName)
         {
             var query = SqlQueryGeneration.GetPatientByName(patientName);
             var patient = _sqlManager.GetPatient(query);
@@ -32,12 +32,20 @@ namespace Pharmacy.BusinessLogic.Managers
             return patient;
         }
 
-        public static List<Patient> GetPatientByPhone(string phoneNumber)
+        public static List<Patient> GetByPhone(string phoneNumber)
         {
             var query = SqlQueryGeneration.GetPatientByPhone(phoneNumber);
             var patient = _sqlManager.GetPatient(query);
 
             return patient;
+        }
+
+        public static Patient GetByRecipeId(Guid orderId)
+        {
+            var query = SqlQueryGeneration.GetPatientByRecipeId(orderId);
+            var patient = _sqlManager.GetPatient(query);
+
+            return patient.FirstOrDefault();
         }
 
         public static List<Patient> GetAll()

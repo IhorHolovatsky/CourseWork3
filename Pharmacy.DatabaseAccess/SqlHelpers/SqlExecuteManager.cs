@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using Pharmacy.DatabaseAccess.Classes;
+using Pharmacy.DatabaseAccess.Enums;
 using Pharmacy.DatabaseAccess.Utils;
 
 namespace Pharmacy.DatabaseAccess.SqlHelpers
@@ -82,7 +83,7 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
                             {
                                 Name = row.Get<string>("Medicine_Name"),
                                 Description = row.Get<string>("Description"),
-                                Price = row.Get<decimal>("Price"),
+                                Price = row.Get<int>("Price"),
                                 Image = Image.FromStream(new MemoryStream(row.Get<byte[]>("Image"))),
                                 ImageUrl = row.Get<string>("ImageUrl"),
                                 Type = new MedicineType(row.Get<Guid>("ID_MedicineType"))
@@ -101,7 +102,7 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
             var objectId = RunScalarQuery(queries[0], new Dictionary<string, object> { { "@Image", stream.ToArray() } });
 
             //Insert relationships
-            RunNonQuery(string.Format(queries[1], objectId), null);
+            RunNonQuery(queries[1], null);
 
             return objectId;
         }
@@ -116,7 +117,7 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
                              {
                                  Name = row.Get<string>("Medicine_Name"),
                                  Description = row.Get<string>("Description"),
-                                 Price = row.Get<decimal>("Price"),
+                                 Price = row.Get<int>("Price"),
                                  Image = Image.FromStream(new MemoryStream(row.Get<byte[]>("Image"))),
                                  ImageUrl = row.Get<string>("ImageUrl"),
                                  Type = new MedicineType(row.Get<Guid>("ID_MedicineType"))
@@ -125,7 +126,7 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
                                  }
                              }).ToList();
 
-            
+
             return medicines.Count > 0 ? medicines.First() : null;
         }
 
@@ -134,16 +135,16 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
             return RunNonQuery(string.Join("\n", query), null);
         }
         #endregion
-        
+
         #region UseMethod
 
         public List<MedicineType> GetUseMethod(string query)
         {
             var MedicineType = (from row in RunQuery(query, null).AsEnumerable()
-                               select new MedicineType(row.Get<Guid>("ID_MedicineType"))
-                               {
-                                   TypeOf = row.Get<string>("Type_Of"),
-                               }).ToList();
+                                select new MedicineType(row.Get<Guid>("ID_MedicineType"))
+                                {
+                                    TypeOf = row.Get<string>("Type_Of"),
+                                }).ToList();
 
             return MedicineType;
         }
@@ -155,15 +156,15 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
         public List<Patient> GetPatient(string query)
         {
             var patient = (from row in RunQuery(query, null).AsEnumerable()
-                               select new Patient(row.Get<Guid>("ID_Patient"))
-                               {
-                                   LastName = row.Get<string>("Surname"),
-                                   FirstName = row.Get<string>("Patient_Name"),
-                                   SecondaryName = row.Get<string>("PName"),
-                                   DateOfBirth = row.Get<DateTime>("Date_Of_Birth"),
-                                   PhoneNumber = row.Get<string>("PhoneNumber"),
-                                   Address = row.Get<string>("Address")
-                               }).ToList();
+                           select new Patient(row.Get<Guid>("ID_Patient"))
+                           {
+                               LastName = row.Get<string>("Surname"),
+                               FirstName = row.Get<string>("Patient_Name"),
+                               SecondaryName = row.Get<string>("PName"),
+                               DateOfBirth = row.Get<DateTime>("Date_Of_Birth"),
+                               PhoneNumber = row.Get<string>("PhoneNumber"),
+                               Address = row.Get<string>("Address")
+                           }).ToList();
 
             return patient;
         }
@@ -174,6 +175,61 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
             return objectId;
         }
 
+        #endregion
+
+        #region Order
+
+        public List<Order> GetOrder(string query)
+        {
+            var orders = (from row in RunQuery(query, null).AsEnumerable()
+                          select new Order(row.Get<Guid>("ID_OrderTable"))
+                           {
+                               PhoneNumber = row.Get<string>("Phone_Number"),
+                               AvailabilityOfComponents = row.Get<int>("Availability_Of_Components"),
+                               MakeState = (OrderState)Enum.Parse(typeof(OrderState), row.Get<string>("Make_State")),
+                               ReadyTime = row.Get<DateTime>("Time_To_Make"),
+                               OrderDate = row.Get<DateTime>("OrderDate"),
+                               TotalPrice = row.Get<int>("Price")
+                           }).ToList();
+
+            return orders;
+        }
+
+        public Guid InsertOrder(string query)
+        {
+            var objectId = RunScalarQuery(query, null);
+            
+            return objectId;
+        }
+
+        #endregion
+
+        #region Recipe
+
+        public List<Recipe> GetRecipe(string query)
+        {
+            var recipes = (from row in RunQuery(query, null).AsEnumerable()
+                           select new Recipe(row.Get<Guid>("ID_Recipe"))
+                           {
+                              Patient = new Patient(row.Get<Guid>("ID_Patient")),
+                              Doctor= new Doctor(row.Get<Guid>("ID_Doctor")),
+                              Diagnoz = row.Get<string>("Diagnoz")
+                           }).ToList();
+
+
+            return recipes;
+        }
+
+        public Guid InsertRecipe(List<string> queries)
+        {
+            var objectId = RunScalarQuery(queries[0], null);
+
+            //Insert relationships
+            RunNonQuery(queries[1], null);
+            
+            return objectId;
+        }
+        
         #endregion
 
 

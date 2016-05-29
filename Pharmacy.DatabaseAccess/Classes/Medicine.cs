@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Windows.Media.Imaging;
 using System.Xml.Serialization;
 using Pharmacy.DatabaseAccess.Interfaces;
+using Pharmacy.DatabaseAccess.SqlHelpers;
 
 namespace Pharmacy.DatabaseAccess.Classes
 {
@@ -21,7 +22,7 @@ namespace Pharmacy.DatabaseAccess.Classes
         public string Name { get; set; }
 
         [DataMember]
-        public decimal Price { get; set; }
+        public int Price { get; set; }
 
         [DataMember]
         public string Description { get; set; }
@@ -96,6 +97,29 @@ namespace Pharmacy.DatabaseAccess.Classes
         public Medicine(Guid medicineId)
         {
             ((IEntity)this).EntityId = medicineId;
+        }
+
+        public List<Ingredient> GetIngredients()
+        {
+            var query = SqlQueryGeneration.GetIngredientByMedicineIdId(this.Id);
+            var ingredients = new SqlExecuteManager().GetIngredient(query);
+
+            return ingredients;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var destinationObj = obj as Medicine;
+
+            if (destinationObj == null)
+                return false;
+
+            return this.Id == destinationObj.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

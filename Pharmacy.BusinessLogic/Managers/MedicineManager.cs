@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Remoting;
 using Pharmacy.DatabaseAccess.Classes;
 using Pharmacy.DatabaseAccess.SqlHelpers;
 
@@ -20,50 +21,25 @@ namespace Pharmacy.BusinessLogic.Managers
         public static Medicine GetMedicineById(Guid medicineId)
         {
             var query = SqlQueryGeneration.GetMedicineById(medicineId);
-            var medicines = _sqlManager.GetMedicine(query);
-
-            if (medicines.Count == 0)
-                return null;
-
-            var ingredientQuery = SqlQueryGeneration.GetIngredientByMedicineIdId(medicineId);
-            var ingredients = _sqlManager.GetIngredient(ingredientQuery);
-
-            var medicine = medicines.First();
-            medicine.Ingredients = ingredients;
-
-            return medicine;
+            return FillObjectData(query).FirstOrDefault();
         }
 
         public static Medicine GetMedicineByName(string medicineName)
         {
             var query = SqlQueryGeneration.GetMedicineByName(medicineName);
-            var medicines = _sqlManager.GetMedicine(query);
-
-            foreach (var med in medicines)
-            {
-                var ingredientQuery = SqlQueryGeneration.GetIngredientByMedicineIdId(med.Id);
-                var ingredients = _sqlManager.GetIngredient(ingredientQuery);
-
-                med.Ingredients = ingredients;
-            }
-
-            return medicines.Count > 0 ? medicines.First() : null; ;
+            return FillObjectData(query).FirstOrDefault();
         }
+
+        public static List<Medicine> GetMedicinesByRecipeId(Guid recipeId)
+        {
+            var query = SqlQueryGeneration.GetMedicineByRecipeId(recipeId);
+            return FillObjectData(query);
+        } 
 
         public static List<Medicine> GetAllMedicines()
         {
             var query = SqlQueryGeneration.GetAllMedicines();
-            var medicines = _sqlManager.GetMedicine(query);
-
-            foreach (var med in medicines)
-            {
-                var ingredientQuery = SqlQueryGeneration.GetIngredientByMedicineIdId(med.Id);
-                var ingredients = _sqlManager.GetIngredient(ingredientQuery);
-
-                med.Ingredients = ingredients;
-            }
-
-            return medicines;
+            return FillObjectData(query); ;
         }
         #endregion
 
@@ -121,5 +97,18 @@ namespace Pharmacy.BusinessLogic.Managers
         }
 
         #endregion
+
+
+        private static List<Medicine> FillObjectData(string query)
+        {
+            var medicines = _sqlManager.GetMedicine(query);
+            
+            foreach (var medicine in medicines)
+            {
+                medicine.Ingredients = IngredientManager.GetByMedicineId(medicine.Id);
+            }
+
+            return medicines;
+        }
     }
 }

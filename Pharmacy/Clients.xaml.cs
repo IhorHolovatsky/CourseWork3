@@ -12,11 +12,15 @@ namespace Pharmacy
     /// </summary>
     public partial class Clients : Window
     {
+        public Patient SelectedPatient { get; set; }
+
+        private List<Patient> _patients;
+
         public Clients()
         {
             InitializeComponent();
 
-            ShowAllClientClick(this, new RoutedEventArgs());
+            PatientsGrid.ItemsSource = GetGridData();
         }
 
         private void Btn_selectDataOK2_Copy1_OnClick(object sender, RoutedEventArgs e)
@@ -26,39 +30,7 @@ namespace Pharmacy
 
         private void FindClientClick(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(tb_ClientId.Text))
-            {
-                Guid patientId;
-                if (!Guid.TryParse(tb_ClientId.Text, out patientId))
-                {
-                    MessageBox.Show("Invalid Patient ID");
-                    return;
-                }
-
-                var patient = PatientManager.GetPatientById(patientId);
-                PatientsGrid.ItemsSource = new List<Patient> { patient };
-                
-                return;
-            }
-
-
-            var patients = new List<Patient>();
-
-            if (!string.IsNullOrEmpty(tb_ClientPhone.Text))
-            {
-                patients = PatientManager.GetPatientByPhone(tb_ClientPhone.Text);
-                patients = patients.Where(p => string.IsNullOrEmpty(tb_ClientLastName.Text) || p.LastName == tb_ClientLastName.Text)
-                                   .ToList();
-            }
-            else if (!string.IsNullOrEmpty(tb_ClientLastName.Text))
-            {
-                patients = PatientManager.GetPatientByName(tb_ClientLastName.Text);
-                patients = patients.Where(p => string.IsNullOrEmpty(tb_ClientPhone.Text) || p.PhoneNumber == tb_ClientPhone.Text)
-                                   .ToList();
-            }
-
-
-            PatientsGrid.ItemsSource = patients;
+            PatientsGrid.ItemsSource = GetGridData();
         }
 
         private void ShowAllClientClick(object sender, RoutedEventArgs e)
@@ -67,12 +39,11 @@ namespace Pharmacy
             tb_ClientLastName.Text = null;
             tb_ClientPhone.Text = null;
 
-            var patients = PatientManager.GetAll();
-
-            PatientsGrid.ItemsSource = patients;
+            PatientsGrid.ItemsSource = GetGridData();
         }
         private void Btn_selectClient_OnClick(object sender, RoutedEventArgs e)
         {
+            SelectedPatient = PatientsGrid.SelectedItem as Patient;
             this.Close();
         }
 
@@ -81,6 +52,44 @@ namespace Pharmacy
         private void PatientsGrid_OnSelected(object sender, RoutedEventArgs e)
         {
             btn_selectClient.IsEnabled = PatientsGrid.SelectedCells.Count > 0;
+        }
+
+        private IEnumerable<Patient> GetGridData()
+        {
+            if (!string.IsNullOrEmpty(tb_ClientId.Text))
+            {
+                Guid patientId;
+                if (!Guid.TryParse(tb_ClientId.Text, out patientId))
+                {
+                    MessageBox.Show("Invalid Patient ID");
+                    return new List<Patient>();
+                }
+
+                var patient = PatientManager.GetById(patientId);
+                PatientsGrid.ItemsSource = new List<Patient> { patient };
+
+                return new List<Patient>();
+            }
+
+
+            List<Patient> patients;
+
+            if (!string.IsNullOrEmpty(tb_ClientPhone.Text))
+            {
+                patients = PatientManager.GetByPhone(tb_ClientPhone.Text);
+                patients = patients.Where(p => string.IsNullOrEmpty(tb_ClientLastName.Text) || p.LastName == tb_ClientLastName.Text)
+                                   .ToList();
+            }
+            else if (!string.IsNullOrEmpty(tb_ClientLastName.Text))
+            {
+                patients = PatientManager.GetByName(tb_ClientLastName.Text);
+                patients = patients.Where(p => string.IsNullOrEmpty(tb_ClientPhone.Text) || p.PhoneNumber == tb_ClientPhone.Text)
+                                   .ToList();
+            }
+            else { patients = PatientManager.GetAll(); }
+
+
+            return patients;
         }
 
         #endregion
@@ -98,9 +107,9 @@ namespace Pharmacy
             };
 
             var insertedPatientId = PatientManager.Insert(patient);
-            var insertedPatient = PatientManager.GetPatientById(insertedPatientId);
+            var insertedPatient = PatientManager.GetById(insertedPatientId);
 
-           // PatientsGrid.Items.Add(insertedPatient);
+            PatientsGrid.ItemsSource = GetGridData();
         }
     }
 }

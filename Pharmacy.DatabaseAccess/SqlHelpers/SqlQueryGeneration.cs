@@ -36,6 +36,21 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
             return query;
         }
 
+        public static string GetDoctorByRecipeId(Guid recipeId)
+        {
+            var query = String.Format(
+                         @"SELECT DISTINCT 
+                          Surname,
+                          Doctor_Name,
+                          PName
+                          FROM Doctor
+                               INNER JOIN Recipe
+                                  ON Recipe.ID_Doctor = Doctor.ID_Doctor
+                          WHERE ID_Recipe = '{0}'", recipeId);
+
+            return query;
+        }
+
         public static string GetAllDoctors()
         {
             var query = @"SELECT DISTINCT 
@@ -52,7 +67,7 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
             var doctorId = Guid.NewGuid();
             var query = string.Format(@"INSERT INTO Doctor(ID_Doctor, Surname, Doctor_Name, PName)
                           OUTPUT inserted.ID_Doctor
-                          VALUES({0}, {1}, {2}, {3})", doctorId, doctor.LastName, doctor.FirstName, doctor.SecondaryName);
+                          VALUES('{0}', '{1}', '{2}', '{3}')", doctorId, doctor.LastName, doctor.FirstName, doctor.SecondaryName);
 
             return query;
         }
@@ -63,15 +78,15 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
 
             if (!string.IsNullOrWhiteSpace(doctor.LastName))
             {
-                fieldsToUpdate.Add(string.Format("Surname = {0}", doctor.LastName));
+                fieldsToUpdate.Add(string.Format("Surname = '{0}'", doctor.LastName));
             }
             if (!string.IsNullOrWhiteSpace(doctor.FirstName))
             {
-                fieldsToUpdate.Add(string.Format("Doctor_Name = {0}", doctor.FirstName));
+                fieldsToUpdate.Add(string.Format("Doctor_Name = '{0}'", doctor.FirstName));
             }
             if (!string.IsNullOrWhiteSpace(doctor.SecondaryName))
             {
-                fieldsToUpdate.Add(string.Format("PName = {0}", doctor.SecondaryName));
+                fieldsToUpdate.Add(string.Format("PName = '{0}'", doctor.SecondaryName));
             }
 
             if (!fieldsToUpdate.Any()) return string.Empty;
@@ -196,6 +211,20 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
             return query;
         }
 
+        public static string GetMedicineByRecipeId(Guid recipeId)
+        {
+            var query = string.Format(@"SELECT * 
+                                        FROM Medicine
+                                        	INNER JOIN WrittenMedicine
+                                        		ON Medicine.ID_Medicine = WrittenMedicine.ID_Medicine
+                                        	INNER JOIN Recipe	
+                                        		ON Recipe.ID_Recipe = WrittenMedicine.ID_Recipe
+                                        WHERE Recipe.ID_Recipe = '{0}'", recipeId);
+
+            return query;
+            
+        }
+
         public static string GetAllMedicines()
         {
             var query = @"SELECT *
@@ -298,7 +327,7 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
             var queryDeleteMedicineIngredients = string.Format(@"DELETE  FROM MedicineIngredient
                                         WHERE ID_Medicine = '{0}'", medicine.Id);
 
-            return new List<string> { queryDeleteMedicineIngredients, queryDeleteMedicine};
+            return new List<string> { queryDeleteMedicineIngredients, queryDeleteMedicine };
         }
 
         #endregion
@@ -375,15 +404,14 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
             return query;
         }
 
-
-        public static string GetPatientByOrderId(Guid orderId)
+        public static string GetPatientByRecipeId(Guid recipeId)
         {
             var query = string.Format(
                          @"SELECT * 
                            FROM Patient 
-                           INNER JOIN OrderTable
-                           ON Patient.ID_Patient = OrderTable.ID_Patient
-                           WHERE ID_OrderTable = '{0}'", orderId);
+                           INNER JOIN Recipe
+                           ON Patient.ID_Patient = Recipe.ID_Patient
+                           WHERE ID_Recipe = '{0}'", recipeId);
 
             return query;
         }
@@ -407,6 +435,99 @@ namespace Pharmacy.DatabaseAccess.SqlHelpers
                           VALUES ('{0}','{1}','{2}','{3}','{4}','{5}', '{6}')", entityId, patient.LastName, patient.FirstName, patient.SecondaryName, patient.DateOfBirth, patient.PhoneNumber, patient.Address);
 
             return query;
+        }
+
+        #endregion
+
+        #region Order
+
+        public static string GetAllOrders()
+        {
+            var query = @"SELECT * 
+                          FROM OrderTable";
+
+            return query;
+        }
+
+        public static string GetOrderById(Guid objectId)
+        {
+            var query = string.Format(@"SELECT * 
+                          FROM OrderTable
+                          WHERE ID_OrderTable = '{0}'", objectId);
+
+            return query;
+        }
+        public static string GetOrderByPathientPhone(string patientPhone)
+        {
+            var query = string.Format(@"SELECT * 
+                                        FROM OrderTable
+                                        INNER JOIN Recipe
+                                            ON OrderTable.ID_Recipe = Recipe.ID_Recipe
+										INNER JOIN Patient
+											ON Recipe.ID_Patient = Patient.ID_Patient
+                                        WHERE Patient.PhoneNumber LIKE '%{0}%'", patientPhone);
+
+            return query;
+        }
+
+        public static string InsertOrder(Order order)
+        {
+            var entityId = Guid.NewGuid();
+
+            var query =
+                string.Format(
+                    @"INSERT INTO OrderTable(ID_OrderTable, ID_Recipe, Phone_Number, Availability_Of_Components, Make_State, Time_To_Make, Price, OrderDate)
+                      OUTPUT inserted.ID_OrderTable    
+                      VALUES ('{0}','{1}','{2}','{3}','{4}', '{5}' ,'{6}', '{7}')", entityId, order.Recipe.Id, order.PhoneNumber, order.AvailabilityOfComponents, order.MakeState.ToString("G"), order.ReadyTime, order.TotalPrice, order.OrderDate);
+
+            return query;
+        }
+
+        #endregion
+
+        #region Recipe
+
+        public static string GetRecipeByOrderId(Guid objectId)
+        {
+            var query = string.Format(@"SELECT * 
+                                        FROM Recipe
+                                        INNER JOIN OrderTable
+                                            ON OrderTable.ID_Recipe = Recipe.ID_Recipe
+                                        WHERE OrderTable.ID_OrderTable = '{0}'", objectId);
+            
+            return query;
+        }
+
+        public static string GetRecipeByPatientId(Guid objectId)
+        {
+            var query = string.Format(@"SELECT * 
+                                        FROM Recipe
+                                        INNER JOIN Patient
+                                            ON Patient.ID_Patient = Recipe.ID_Patient
+                                        WHERE Patient.ID_Patient = '{0}'", objectId);
+
+            return query;
+        }
+
+        public static List<string> InsertRecipe(Recipe recipe)
+        {  
+            var recipeId = Guid.NewGuid();
+
+            var queryRecipe = string.Format(@"INSERT INTO Recipe(ID_Recipe, ID_Patient, ID_Doctor, Diagnoz)
+                                        OUTPUT inserted.ID_Recipe       
+                                        VALUES ('{0}', '{1}', '{2}', '{3}')", recipeId, recipe.Patient.Id, recipe.Doctor.Id, recipe.Diagnoz);
+
+            var queryRecipeMedicines = @"INSERT INTO WrittenMedicine(ID_WrittenMedicine, ID_Recipe, ID_Medicine)
+                                                           VALUES";
+
+            var values = (from medicine in recipe.Medicines
+                          let entityId = Guid.NewGuid()
+                          select string.Format("('{0}', '{1}', '{2}')", entityId, recipeId, medicine.Id))
+                          .ToList();
+
+            queryRecipeMedicines += string.Join(",", values);
+
+            return new List<string> {queryRecipe, queryRecipeMedicines};
         }
 
         #endregion

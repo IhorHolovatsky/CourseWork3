@@ -67,7 +67,7 @@
                         <ComboBox x:Name="medicineIngredients"  DisplayMemberPath="Name" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,48,10,0" Width="184" Height="25"></ComboBox>
                     </Grid>
                 </GroupBox>
-                <GroupBox   Visibility="Hidden"  x:Name="ExtentedSearchGroupBox" Background="Cornsilk"   BorderBrush="Crimson" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="367,-76,10,340" >
+                <GroupBox    x:Name="ExtentedSearchGroupBox" Background="Cornsilk"   BorderBrush="Crimson" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Margin="367,-76,10,340" >
                     <GroupBox.Header>
                         <TextBlock FontSize="16">Розширений пошук</TextBlock>
 
@@ -207,8 +207,10 @@
 
                         </DataGrid>
                         <Label Content="Інгридієнти" FontWeight="Bold" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="225,5,0,0" VerticalAlignment="Top" Height="26" Width="176"/>
-                        <Button Content="&gt;" Click="Need_OnClick" HorizontalAlignment="Center" Margin="210,100,0,0" VerticalAlignment="Top" Width="27" RenderTransformOrigin="-0.069,0.25"/>
-                        <Button Content="&lt;" Click="Block_OnClick"  HorizontalAlignment="Center" Margin="0,100,208,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="-0.069,0.25"/>
+                        <Button Content="&gt;" Click="Need_OnClick" HorizontalAlignment="Center" Margin="210,90,0,0" VerticalAlignment="Top" Width="27" RenderTransformOrigin="-0.069,0.25"/>
+                        <Button Content="&lt;" Click="Block_OnClick"  HorizontalAlignment="Center" Margin="0,90,208,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="-0.069,0.25"/>
+                        <Button Content="&gt;" Click="CancelBlock_OnClick"  HorizontalAlignment="Center" Margin="0,115,208,0" VerticalAlignment="Top" Width="26" RenderTransformOrigin="-0.069,0.25"/>
+                        <Button Content="&lt;" Click="CancelNeed_OnClick" HorizontalAlignment="Center" Margin="210,115,0,0" VerticalAlignment="Top" Width="28" RenderTransformOrigin="-0.069,0.25"/>
 
 
                     </Grid>
@@ -283,7 +285,7 @@
 
                 </DataGrid>
                 <Button x:Name="btn_selectDataOK2_Copy" Content="Закрити"  HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="102" Margin="0,0,10,10"  Height="23" Click="Btn_selectDataOK2_Copy_OnClick"/>
-                <Button x:Name="btn_selectDataOK2_Copy2" Content="Вибрати" IsEnabled="False" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="102" Margin="10,0,0,10"  Height="23"/>
+                <Button x:Name="ButtonSelectMedicine" Click="SelectMedicines_OnClick" Content="Вибрати" IsEnabled="False" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="102" Margin="10,0,0,10"  Height="23"/>
                 <Button x:Name="ButtonDeleteMedicine" Click="ButtonDeleteMedicine_OnClick" Content="Видалити" IsEnabled="False" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="102" Margin="772,0,0,10"  Height="23"/>
 
 

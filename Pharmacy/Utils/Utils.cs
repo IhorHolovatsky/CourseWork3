@@ -27,7 +27,7 @@ namespace Pharmacy.Utils
 
         public static string Serialize(object obj)
         {
-            using (var stream = File.Open(Path.Combine(Environment.CurrentDirectory, "../../AppData/Serializing.txt"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
+            using (var stream = File.Open(Path.Combine(Environment.CurrentDirectory, "../../AppData/Serializing.txt"), FileMode.Create, FileAccess.ReadWrite, FileShare.None))
             using (var reader = new StreamReader(stream))
             {
                 var serializer = new DataContractSerializer(obj.GetType());
@@ -39,7 +39,7 @@ namespace Pharmacy.Utils
 
         public static object Deserialize(Type toType)
         {
-            using (var stream = File.Open(Path.Combine(Environment.CurrentDirectory, "../../AppData/Serializing.txt"), FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
+            using (var stream = File.Open(Path.Combine(Environment.CurrentDirectory, "../../AppData/Serializing.txt"), FileMode.Open, FileAccess.ReadWrite, FileShare.None))
             {
                 var deserializer = new DataContractSerializer(toType);
                 return deserializer.ReadObject(stream);

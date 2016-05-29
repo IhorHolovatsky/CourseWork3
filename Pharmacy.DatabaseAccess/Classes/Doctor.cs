@@ -15,6 +15,11 @@ namespace Pharmacy.DatabaseAccess.Classes
 
         Guid IEntity.EntityId { get; set; }
 
+        public Doctor()
+        {
+            
+        }
+
         public Doctor(Guid entityId)
         {
             ((IEntity) this).EntityId = entityId;

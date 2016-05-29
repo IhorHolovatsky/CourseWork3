@@ -44,9 +44,10 @@
     <Compile Include="Managers\DoctorManager.cs" />
     <Compile Include="Managers\IngredientManager.cs" />
     <Compile Include="Managers\MedicineManager.cs" />
-    <Compile Include="Managers\OderManager.cs" />
+    <Compile Include="Managers\OrderManager.cs" />
     <Compile Include="Managers\PatientManager.cs" />
     <Compile Include="Managers\MedicineTypeManager.cs" />
+    <Compile Include="Managers\RecipeManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

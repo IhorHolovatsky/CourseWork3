@@ -11,8 +11,6 @@ namespace Pharmacy.DatabaseAccess.Classes
     {
         public Guid Id { get { return ((IEntity)this).EntityId; ; } }
 
-        private SqlExecuteManager _sqlManager;
-
         [DataMember]
         public string Name { get; set; }
         [DataMember]
@@ -35,7 +33,7 @@ namespace Pharmacy.DatabaseAccess.Classes
         public List<Medicine> GetMedicines()
         {
             var query = SqlQueryGeneration.GetAllMedicinesByIngredientId(((IEntity)this).EntityId);
-            var medicines = _sqlManager.GetMedicine(query);
+            var medicines = new SqlExecuteManager().GetMedicine(query);
 
             return medicines;
         }

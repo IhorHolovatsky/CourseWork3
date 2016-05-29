@@ -6,7 +6,7 @@
     <!--735.448-->
     <!--Resources/favicon.ico-->
     <DockPanel>
-        
+
         <Grid Margin="0,146,0,0">
             <Image Source="Images/Заказы.png" Margin="411,-130,534,561" RenderTransformOrigin="0.397,0.46"/>
             <Label VerticalAlignment="Center" Content="Замовлення" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="484,-126,350,555" Height="50"  Width="179"></Label>
@@ -40,7 +40,8 @@
                     </Button>
                     <Button BorderThickness="0" Click="Btn_selectDataOK2_Copy2_OnClick" Background="Cornsilk" x:Name="btn_selectDataOK2_Copy2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="20" Margin="266,52,0,0" Height="23">
                         <Image Source="Images/open.png" RenderTransformOrigin="0.531,2.844"></Image>
-                    </Button></Grid>
+                    </Button>
+                </Grid>
             </GroupBox>
             <GroupBox Background="Cornsilk"  BorderBrush="Crimson" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="637,-76,10,369">
                 <GroupBox.Header>
@@ -52,39 +53,30 @@
                         <ColumnDefinition Width="0*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="tb_IntDoc" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,24,0,0" />
-                    <TextBox x:Name="tb_RecipientPhone" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,52,0,0" />
+                    <TextBox x:Name="trackOrderId" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,24,0,0" />
+                    <TextBox x:Name="clientPhone" Grid.Column="1" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188" Margin="133,52,0,0" />
                     <Label Content="   ID замовлення:" Grid.Column="1" HorizontalAlignment="Left" Margin="10,24,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.028,1" Height="26" Width="104"/>
                     <Label Content="Моб. телефон:" Grid.Column="1" HorizontalAlignment="Left" Margin="23,52,0,0" VerticalAlignment="Top" Height="26" Width="91" RenderTransformOrigin="-1.248,0.479"/>
                     <Label Content="Клієнт:" Grid.Column="1" HorizontalAlignment="Left" Margin="67,78,0,0" VerticalAlignment="Top" Height="26" Width="47"/>
-                    <Button Content="Шукати" Height="23"  Margin="227,108,23,40" Grid.ColumnSpan="2" RenderTransformOrigin="0,0.648"   />
-                    <ComboBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="133,82,0,0" VerticalAlignment="Top" Width="188"/>
+                    <Button Content="Шукати" Click="FindOrder_OnClick" Height="23"  Margin="227,108,23,40" Grid.ColumnSpan="2" RenderTransformOrigin="0,0.648"   />
+                    <ComboBox x:Name="comboBoxClients" Grid.ColumnSpan="2" HorizontalAlignment="Left" Margin="133,82,0,0" VerticalAlignment="Top" Width="188"/>
+                    <Button Content="Очистити" Click="FindAll_OnClick" Height="22" Width="100"  Grid.ColumnSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="14,0,0,49"   />
 
                 </Grid>
             </GroupBox>
 
 
-            <DataGrid Margin="10,0,10,41" x:Name="DG_doc" IsReadOnly="True" BorderBrush="Crimson"  BorderThickness="2"  CanUserResizeColumns="True" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" GridLinesVisibility="All"  AutoGenerateColumns="False" Height="323" >
+            <DataGrid Margin="10,0,10,41" x:Name="ordersGrid" IsReadOnly="True" BorderBrush="Crimson"  BorderThickness="2"  CanUserResizeColumns="True" VerticalAlignment="Bottom"  HorizontalAlignment="Stretch" ItemsSource="{Binding}" GridLinesVisibility="All"  AutoGenerateColumns="False" Height="323" >
                 <DataGrid.Columns  >
                     <DataGridTemplateColumn Width="75" Header ="Статус" CanUserResize="False" SortMemberPath="Cost">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Cost, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock Text="{Binding MakeState}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
 
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Visibility="Hidden" SortMemberPath="IntDocNumber" Header = "ID замовлення" Binding="{Binding IntDocNumber}" Width="150" CanUserResize="False">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="VerticalAlignment" Value="Center" />
-                                <Setter Property="HorizontalAlignment" Value="Center" />
-                                <Setter Property="Margin" Value="5,3,5,2" />
-
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTemplateColumn Width="200" SortMemberPath="CityRecipientDescription">
+                    <DataGridTemplateColumn Width="150" SortMemberPath="CityRecipientDescription">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
                                 <TextBlock Text="Клієнт"/>
@@ -99,50 +91,53 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Text="{Binding CityRecipientDescription}" Grid.Row="0" Margin="5,2,5,3" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding RecipientDescription}" Grid.Row="1"  Margin="5,0,5,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding RecipientAddressDescription}" Grid.Row="2"  Margin="5,0,5,0"  TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Recipe.Patient.FirstName}" Grid.Row="0" Margin="5,2,5,3" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Recipe.Patient.LastName}" Grid.Row="1"  Margin="5,0,5,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding Recipe.Patient.SecondaryName}" Grid.Row="2"  Margin="5,0,5,0"  TextWrapping="Wrap" VerticalAlignment="Center"/>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="150" SortMemberPath="CityRecipientDescription">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Лікар"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="{Binding Recipe.Doctor.FirstName}" Grid.Row="0" Margin="5,2,5,3" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Recipe.Doctor.LastName}" Grid.Row="1"  Margin="5,0,5,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding Recipe.Doctor.SecondaryName}" Grid.Row="2"  Margin="5,0,5,0"  TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="100" Header ="Діагноз" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Recipe.Diagnoz}" TextWrapping="Wrap" Margin="5,0,5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Width="200" Header ="Куплені товари" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding CostOnSite, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock Text="{Binding MedicineString}" TextWrapping="Wrap" Margin="5,0,5,0"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
 
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Width="115" CanUserResize="False" SortMemberPath="StateName">
-                        <DataGridTemplateColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="Дата замовлення"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.HeaderTemplate>
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
 
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding StateName}" Grid.Row="0" Margin="0,2,0,3" FontWeight="Bold"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding PrintedDescription}" Grid.Row="1"   TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                </Grid>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header ="Загальна вартість" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding CostOnSite, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-
-                    </DataGridTemplateColumn>
-                    <DataGridTextColumn SortMemberPath="DateTime" Header = "моб. Телефон" Binding="{Binding DateTime, StringFormat=\{0:dd MMMM yyyy\}}" CanUserResize="False" >
+                    <DataGridTextColumn SortMemberPath="DateTime" Header = "Дата замовлення" Binding="{Binding OrderDate, StringFormat=\{0:dd MMMM yyyy\}}" CanUserResize="False" >
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="VerticalAlignment" Value="Center" />
@@ -151,32 +146,42 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-
-                    <DataGridTemplateColumn   CanUserResize="False" SortMemberPath="RecipientDescription">
+                    <DataGridTemplateColumn Width="115" CanUserResize="False" SortMemberPath="StateName">
                         <DataGridTemplateColumn.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Text="Адреса доставки" TextAlignment="Center"/>
+                                <TextBlock Text="моб. Телефон"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.HeaderTemplate>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding RecipientContactPhone}" Grid.Row="0" Margin="5,0,5,0"  VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding RecipientDescription}" Grid.Row="1"   Margin="5,0,5,0" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                                </Grid>
+                                <TextBlock Text="{Binding PhoneNumber}" Grid.Row="0" Margin="0,2,0,3" FontWeight="Bold"  TextAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap"/>
+
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header ="Загальна вартість" CanUserResize="False" CanUserSort="True" SortMemberPath="CostOnSite">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding TotalPrice, StringFormat=\{0\} грн.}" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+
+                    </DataGridTemplateColumn>
 
 
-                   
+                    <DataGridTemplateColumn   CanUserResize="False" SortMemberPath="RecipientDescription">
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Адреса" TextAlignment="Center"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Recipe.Patient.Address}" Grid.Row="0" Margin="5,0,5,0"  VerticalAlignment="Center" TextWrapping="Wrap"/>
 
-
-
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
                 </DataGrid.Columns>
                 <DataGrid.Resources>

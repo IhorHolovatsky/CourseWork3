@@ -12,6 +12,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using Pharmacy.BusinessLogic.Managers;
 using Pharmacy.DatabaseAccess.Classes;
+using Pharmacy.DatabaseAccess.Comparers;
 
 namespace Pharmacy.Products
 {
@@ -20,6 +21,8 @@ namespace Pharmacy.Products
     /// </summary>
     public partial class Products : Window
     {
+        public IEnumerable<Medicine> SelectedMedicines { get; set; }
+
         private List<Ingredient> _ingredients;
         private List<Ingredient> _blockedIngredients = new List<Ingredient>();
         private List<Ingredient> _neededIngredients = new List<Ingredient>();
@@ -63,29 +66,29 @@ namespace Pharmacy.Products
                 return;
 
             var medicine = (Medicine)dataRow.Item;
-           
+
             var newProduct = new NewProduct();
             newProduct.Init(medicine);
             newProduct.ShowDialog();
 
             productsGrid.ItemsSource = GetGridData();
         }
-        
-      
+
+
         private List<Medicine> GetGridData()
         {
             var medicines = MedicineManager.GetAllMedicines();
             int priceFrom;
             int priceTo;
 
-                medicines = medicines.Where(med => !int.TryParse(filterMedicinePriceFrom.Text, out priceFrom) || med.Price >= priceFrom)
-                                     .Where(med => !int.TryParse(filterMedicinePriceFrom.Text, out priceTo) || med.Price <= priceTo)
-                                     .Where(med => filterMedicineType.SelectedItem == null || med.Type.Id == ((MedicineType)filterMedicineType.SelectedItem).Id)
-                                     .Where(med => string.IsNullOrEmpty(filterMedicineName.Text) || med.Name.ToLower().Contains(filterMedicineName.Text.ToLower()))
-                                     .Where(med => _neededIngredients.Count <= 0 || med.Ingredients.Any(ingr=> _neededIngredients.Any(needIngr=> ingr.Id == needIngr.Id)))
-                                     .Where(med => _blockedIngredients.Count <= 0 || med.Ingredients.All(ingr => _blockedIngredients.All(needIngr => ingr.Id != needIngr.Id)))
-                                     .ToList();
-         
+            medicines = medicines.Where(med => !int.TryParse(filterMedicinePriceFrom.Text, out priceFrom) || med.Price >= priceFrom)
+                                 .Where(med => !int.TryParse(filterMedicinePriceFrom.Text, out priceTo) || med.Price <= priceTo)
+                                 .Where(med => filterMedicineType.SelectedItem == null || med.Type.Id == ((MedicineType)filterMedicineType.SelectedItem).Id)
+                                 .Where(med => string.IsNullOrEmpty(filterMedicineName.Text) || med.Name.ToLower().Contains(filterMedicineName.Text.ToLower()))
+                                 .Where(med => _neededIngredients.Count <= 0 || med.Ingredients.Any(ingr => _neededIngredients.All(needIngr => ingr.Id == needIngr.Id)))
+                                 .Where(med => _blockedIngredients.Count <= 0 || med.Ingredients.All(ingr => _blockedIngredients.All(needIngr => ingr.Id != needIngr.Id)))
+                                 .ToList();
+
 
             return medicines;
         }
@@ -94,8 +97,14 @@ namespace Pharmacy.Products
         {
             var dataGrid = (DataGrid)sender;
 
+            ButtonSelectMedicine.IsEnabled = dataGrid.SelectedCells.Count > 0;
+
             if (dataGrid.SelectedCells.Count <= 0)
+            {
+                DetailsGrid.Visibility = Visibility.Hidden;
                 return;
+            }
+
 
             DetailsGrid.Visibility = Visibility.Visible;
 
@@ -121,35 +130,37 @@ namespace Pharmacy.Products
             productsGrid.ItemsSource = GetGridData();
         }
 
-         private void FilterClear_OnClick(object sender, RoutedEventArgs e)
-         {
-             filterMedicineType.SelectedIndex = -1;
-             filterMedicineName.Text = null;
-             filterMedicinePriceFrom.Text = null;
-             filterMedicinePriceTo.Text = null;
-             BlockedIngredientsGrid.ItemsSource = null;
-             NeededIngredientsGrid.ItemsSource = null;
-             _neededIngredients.Clear();
-             _blockedIngredients.Clear();
-             
+        private void FilterClear_OnClick(object sender, RoutedEventArgs e)
+        {
+            filterMedicineType.SelectedIndex = -1;
+            filterMedicineName.Text = null;
+            filterMedicinePriceFrom.Text = null;
+            filterMedicinePriceTo.Text = null;
+            BlockedIngredientsGrid.ItemsSource = null;
+            NeededIngredientsGrid.ItemsSource = null;
+            _neededIngredients.Clear();
+            _blockedIngredients.Clear();
 
-             productsGrid.ItemsSource = GetGridData();
-             IngredientsGrid.ItemsSource = GetIngredientGridData();
-         }
 
-         private void ExtentedSearch_OnClick(object sender, RoutedEventArgs e)
-         {
-             if (ExtentedSearchGroupBox.Visibility == Visibility.Hidden)
-             {
-                 DetailsGroupBox.Visibility = Visibility.Hidden;
-                 ExtentedSearchGroupBox.Visibility = Visibility.Visible;
-             }
-             else
-             {
-                 ExtentedSearchGroupBox.Visibility = Visibility.Hidden;
-                 DetailsGroupBox.Visibility = Visibility.Visible;
-             }
-         }
+            productsGrid.ItemsSource = GetGridData();
+            IngredientsGrid.ItemsSource = GetIngredientGridData();
+        }
+
+        private void ExtentedSearch_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (ExtentedSearchGroupBox.Visibility == Visibility.Hidden)
+            {
+                DetailsGroupBox.Visibility = Visibility.Hidden;
+                ExtentedSearchGroupBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ExtentedSearchGroupBox.Visibility = Visibility.Hidden;
+                DetailsGroupBox.Visibility = Visibility.Visible;
+            }
+        }
+
+        #region Extented Search
 
         private void Need_OnClick(object sender, RoutedEventArgs e)
         {
@@ -158,10 +169,25 @@ namespace Pharmacy.Products
             _neededIngredients.AddRange(selectedIngredients.Cast<Ingredient>().ToList());
             NeededIngredientsGrid.ItemsSource = null;
             NeededIngredientsGrid.ItemsSource = _neededIngredients;
-           
+
 
             IngredientsGrid.ItemsSource = GetIngredientGridData();
         }
+
+        private void CancelNeed_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectedIngredients = NeededIngredientsGrid.SelectedItems;
+
+            _neededIngredients = _neededIngredients.Except(selectedIngredients.Cast<Ingredient>(), new EntityComparer())
+                                                   .Cast<Ingredient>()
+                                                   .ToList();
+
+            NeededIngredientsGrid.ItemsSource = null;
+            NeededIngredientsGrid.ItemsSource = _neededIngredients;
+            
+            IngredientsGrid.ItemsSource = GetIngredientGridData();
+        }
+
         private void Block_OnClick(object sender, RoutedEventArgs e)
         {
             var selectedIngredients = IngredientsGrid.SelectedItems;
@@ -172,6 +198,23 @@ namespace Pharmacy.Products
 
             IngredientsGrid.ItemsSource = GetIngredientGridData();
         }
+
+        private void CancelBlock_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectedIngredients = BlockedIngredientsGrid.SelectedItems;
+
+            _blockedIngredients = _blockedIngredients.Except(selectedIngredients.Cast<Ingredient>(), new EntityComparer())
+                                                     .Cast<Ingredient>()
+                                                     .ToList();
+
+            BlockedIngredientsGrid.ItemsSource = null;
+            BlockedIngredientsGrid.ItemsSource = _blockedIngredients;
+
+            IngredientsGrid.ItemsSource = GetIngredientGridData();
+        }
+
+        #endregion
+
 
         private List<Ingredient> GetIngredientGridData()
         {
@@ -203,6 +246,12 @@ namespace Pharmacy.Products
             medicineIngredients.ItemsSource = null;
 
             productsGrid.ItemsSource = GetGridData();
+        }
+
+        private void SelectMedicines_OnClick(object sender, RoutedEventArgs e)
+        {
+            SelectedMedicines = productsGrid.SelectedItems.Cast<Medicine>();
+            this.Close();
         }
     }
 }

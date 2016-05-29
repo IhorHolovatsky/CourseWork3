@@ -2,7 +2,7 @@
 
 namespace Pharmacy.DatabaseAccess.Interfaces
 {
-    internal interface IEntity
+    public interface IEntity
     {
         Guid EntityId { get; set; }
     }

@@ -33,6 +33,14 @@ namespace Pharmacy.BusinessLogic.Managers
             return doctors.Count > 0 ? doctors.First() : null; ;
         }
 
+        public static Doctor GetDoctorByRecipeId(Guid recipeId)
+        {
+            var query = SqlQueryGeneration.GetDoctorByRecipeId(recipeId);
+            var doctors = _sqlManager.GetDoctor(query);
+
+            return doctors.Count > 0 ? doctors.First() : null; ;
+        }
+
         public static List<Doctor> GetAllDoctors()
         {
             var query = SqlQueryGeneration.GetAllDoctors();
@@ -43,7 +51,7 @@ namespace Pharmacy.BusinessLogic.Managers
 
         #region INSERT
 
-        public static void Insert(Doctor doctor)
+        public static Guid Insert(Doctor doctor)
         {
             if (doctor == null)
                 throw new ArgumentException("doctor information was not provided");
@@ -52,7 +60,7 @@ namespace Pharmacy.BusinessLogic.Managers
 
             try
             {
-                _sqlManager.InsertDoctor(query);
+               return _sqlManager.InsertDoctor(query);
             }
             catch (SqlException e)
             {
