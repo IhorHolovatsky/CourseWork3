@@ -44,7 +44,7 @@ namespace Pharmacy.Products
             productsGrid.ItemsSource = GetGridData();
         }
 
-        private void Btn_selectDataOK2_Copy_OnClick(object sender, RoutedEventArgs e)
+        private void Dismiss_OnClick(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -214,7 +214,6 @@ namespace Pharmacy.Products
         }
 
         #endregion
-
 
         private List<Ingredient> GetIngredientGridData()
         {

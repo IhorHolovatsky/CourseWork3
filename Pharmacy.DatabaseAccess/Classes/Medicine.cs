@@ -119,7 +119,7 @@ namespace Pharmacy.DatabaseAccess.Classes
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            return this.Id.GetHashCode();
         }
     }
 }
